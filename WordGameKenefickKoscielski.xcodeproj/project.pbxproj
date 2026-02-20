@@ -17,9 +17,22 @@
 		BDDCC2B72F474E2A006AFDA9 /* WordGameKenefickKoscielski.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordGameKenefickKoscielski.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AF2FD3B12F48A22100720D6A /* Exceptions for "WordGameKenefickKoscielski" folder in "WordGameKenefickKoscielski" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = BDDCC2B62F474E2A006AFDA9 /* WordGameKenefickKoscielski */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		BDDCC2B92F474E2A006AFDA9 /* WordGameKenefickKoscielski */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AF2FD3B12F48A22100720D6A /* Exceptions for "WordGameKenefickKoscielski" folder in "WordGameKenefickKoscielski" target */,
+			);
 			path = WordGameKenefickKoscielski;
 			sourceTree = "<group>";
 		};
@@ -271,6 +284,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WordGameKenefickKoscielski/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -302,6 +316,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WordGameKenefickKoscielski/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
