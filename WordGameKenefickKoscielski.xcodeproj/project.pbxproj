@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		BDE3D8F82F489CD100A00877 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = BDE3D8F72F489CD100A00877 /* FirebaseAuth */; };
+		BDE3D8FA2F489CD100A00877 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = BDE3D8F92F489CD100A00877 /* FirebaseCore */; };
+		BDE3D8FC2F489CD100A00877 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = BDE3D8FB2F489CD100A00877 /* FirebaseDatabase */; };
+		BDE3D8FE2F489CD100A00877 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = BDE3D8FD2F489CD100A00877 /* FirebaseFirestore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		BDDCC2B72F474E2A006AFDA9 /* WordGameKenefickKoscielski.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordGameKenefickKoscielski.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +30,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDE3D8FC2F489CD100A00877 /* FirebaseDatabase in Frameworks */,
+				BDE3D8FE2F489CD100A00877 /* FirebaseFirestore in Frameworks */,
+				BDE3D8FA2F489CD100A00877 /* FirebaseCore in Frameworks */,
+				BDE3D8F82F489CD100A00877 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +76,10 @@
 			);
 			name = WordGameKenefickKoscielski;
 			packageProductDependencies = (
+				BDE3D8F72F489CD100A00877 /* FirebaseAuth */,
+				BDE3D8F92F489CD100A00877 /* FirebaseCore */,
+				BDE3D8FB2F489CD100A00877 /* FirebaseDatabase */,
+				BDE3D8FD2F489CD100A00877 /* FirebaseFirestore */,
 			);
 			productName = WordGameKenefickKoscielski;
 			productReference = BDDCC2B72F474E2A006AFDA9 /* WordGameKenefickKoscielski.app */;
@@ -94,6 +109,9 @@
 			);
 			mainGroup = BDDCC2AE2F474E2A006AFDA9;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				BDE3D8F62F489CD100A00877 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BDDCC2B82F474E2A006AFDA9 /* Products */;
 			projectDirPath = "";
@@ -328,6 +346,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BDE3D8F62F489CD100A00877 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BDE3D8F72F489CD100A00877 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BDE3D8F62F489CD100A00877 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		BDE3D8F92F489CD100A00877 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BDE3D8F62F489CD100A00877 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		BDE3D8FB2F489CD100A00877 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BDE3D8F62F489CD100A00877 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		BDE3D8FD2F489CD100A00877 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BDE3D8F62F489CD100A00877 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BDDCC2AF2F474E2A006AFDA9 /* Project object */;
 }
