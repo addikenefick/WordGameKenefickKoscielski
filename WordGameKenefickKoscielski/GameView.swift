@@ -21,7 +21,7 @@ struct GameView: View {
         
         let session = URLSession.shared
         
-        let dictionaryURL = URL(string: "https://od-api-sandbox.oxforddictionaries.com/api/v2&apikey=8a8d9850e91f06af0839113f83a62dda")!
+        let dictionaryURL = URL(string: "https://dictionaryapi.com/api/v3/references/collegiate/json/test?key=587f7e0d-5c50-4769-a331-613f3d481f68")!
         
         let dataTask = session.dataTask(with: dictionaryURL) {
             (data: Data?, response: URLResponse?, error: Error?) in
