@@ -5,10 +5,10 @@
 //  Created by ADDISON KENEFICK on 2/23/26.
 //
 
-import Foundation
 import SwiftData
-
-class Highscore{
+import Foundation
+class Player: Identifiable {
+    let id = UUID()
     var name: String
     var score: Int
     init(name: String, score: Int) {

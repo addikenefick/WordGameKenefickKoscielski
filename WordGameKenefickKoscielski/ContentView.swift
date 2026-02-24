@@ -24,13 +24,11 @@ struct ContentView: View {
             .foregroundColor(.white)
             .clipShape(RoundedRectangle(cornerRadius: 15))
             .padding()
-Spacer()
+            Spacer()
+    
         }
+        
         
         .padding()
     }
-}
-
-#Preview {
-    ContentView()
 }
