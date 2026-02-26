@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct GameView: View {
+    
+    @State var word = "test"
+    
     var body: some View {
         VStack {
             
@@ -30,8 +33,15 @@ struct GameView: View {
                 print("Error: \(error)")
             } else {
                 if let data = data {
-                    if let jsonObj = try? JSONSerialization.jsonObject(with: data) as? NSDictionary {
-                        print(jsonObj)
+                    //print("\(data)")
+                    //print(data)
+                    if let jsonObj = try? JSONSerialization.jsonObject(with: data) as? [NSDictionary] {
+                        //print(jsonObj.count)
+                        print(jsonObj[0])
+                        if let y = jsonObj[0]["date"] as? String {
+                            //print(y)
+                        }
+                        
                     } else {
                         print("Error: unable to convert json object")
                     }
