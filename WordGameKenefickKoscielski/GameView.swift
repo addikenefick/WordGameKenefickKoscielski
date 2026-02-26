@@ -11,6 +11,8 @@ struct GameView: View {
     
     @State var word = "test"
     
+    @State var notReal = false
+    
     var body: some View {
         VStack {
             
@@ -18,13 +20,17 @@ struct GameView: View {
         .onAppear() {
             getDictionary()
         }
+        
+        .alert("Not a real word", isPresented: $notReal) {
+            
+        }
     }
         
     func getDictionary() {
         
         let session = URLSession.shared
         
-        let dictionaryURL = URL(string: "https://dictionaryapi.com/api/v3/references/collegiate/json/test?key=587f7e0d-5c50-4769-a331-613f3d481f68")!
+        let dictionaryURL = URL(string: "https://dictionaryapi.com/api/v3/references/collegiate/json/\(word)?key=587f7e0d-5c50-4769-a331-613f3d481f68")!
         
         let dataTask = session.dataTask(with: dictionaryURL) {
             (data: Data?, response: URLResponse?, error: Error?) in
@@ -37,13 +43,15 @@ struct GameView: View {
                     //print(data)
                     if let jsonObj = try? JSONSerialization.jsonObject(with: data) as? [NSDictionary] {
                         //print(jsonObj.count)
-                        print(jsonObj[0])
-                        if let y = jsonObj[0]["date"] as? String {
+                        //print(jsonObj[0])
+                        
+                        //if let y = jsonObj[0]["date"] as? String {
                             //print(y)
-                        }
+                        //}
                         
                     } else {
-                        print("Error: unable to convert json object")
+                        notReal = true
+                        //print("Error: unable to convert json object")
                     }
                 } else {
                     print("Error: did not receive data")
