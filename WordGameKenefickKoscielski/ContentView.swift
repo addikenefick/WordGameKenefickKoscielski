@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  WordGameKenefickKoscielski
-//
-//  Created by ADDISON KENEFICK on 2/19/26.
-//
-
 import SwiftUI
 
 struct ContentView: View {
@@ -21,19 +14,24 @@ struct ContentView: View {
                     GameView()
                 }
                 .bold()
-                .frame(width: 80, height: 40)
+                .frame(width: 130, height: 40)
                 .background(.black)
                 .foregroundColor(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .padding()
                 Spacer()
+                NavigationLink("View Leaderboard") {
+                    LeaderboardView(scores: [])
+                }
+                .bold()
+                .frame(width: 80, height: 40)
+                .background(.black)
+                .foregroundColor(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .padding()
             }
             
             .padding()
         }
     }
-}
-
-#Preview {
-    ContentView()
 }
