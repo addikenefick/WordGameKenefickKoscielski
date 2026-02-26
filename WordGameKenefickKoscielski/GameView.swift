@@ -9,14 +9,18 @@ import SwiftUI
 
 struct GameView: View {
     @State var consonantLetters: [String] = []
+    
     @State var vowelLetters: [String] = []
+    
     @State var word = " "
+    
     @State var vowels = ["A","E","I","O","U"]
+    
     @State var consonants = [
         "B","C","D","F","G","H","J","K","L","M",
         "N","P","Q","R","S","T","V","W","X","Y","Z"]
+    
     @State var points = 0
-    @State var wordd = "test"
     
     @State var notReal = false
     
@@ -61,6 +65,7 @@ struct GameView: View {
            
                 Button("Submit") {
                     print(word)
+                    getDictionary()
                 }
                 .padding(10)
                 .background(Color.green)
@@ -87,7 +92,6 @@ struct GameView: View {
             
         }
         .onAppear() {
-            getDictionary()
             generateLetters()
 
         }
@@ -109,7 +113,7 @@ struct GameView: View {
         
         let session = URLSession.shared
         
-        let dictionaryURL = URL(string: "https://dictionaryapi.com/api/v3/references/collegiate/json/\(wordd)?key=587f7e0d-5c50-4769-a331-613f3d481f68")!
+        let dictionaryURL = URL(string: "https://dictionaryapi.com/api/v3/references/collegiate/json/\(word)?key=587f7e0d-5c50-4769-a331-613f3d481f68")!
         
         let dataTask = session.dataTask(with: dictionaryURL) {
             (data: Data?, response: URLResponse?, error: Error?) in
@@ -123,6 +127,8 @@ struct GameView: View {
                     if let jsonObj = try? JSONSerialization.jsonObject(with: data) as? [NSDictionary] {
                         //print(jsonObj.count)
                         //print(jsonObj[0])
+                        
+                        points += word.count
                         
                         //if let y = jsonObj[0]["date"] as? String {
                             //print(y)
