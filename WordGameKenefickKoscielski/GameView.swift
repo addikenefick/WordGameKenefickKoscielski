@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct GameView: View {
+    @State var newScore = false
+    @State var addedName = ""
+    @State var highscore = 0
     @State var consonantLetters: [String] = []
     
     @State var vowelLetters: [String] = []
@@ -28,8 +31,11 @@ struct GameView: View {
         VStack {
             
             Spacer()
-            Button("Refresh"){
+            Button("Restart"){
                 generateLetters()
+                if points>highscore{
+                    newScore = true
+                }
             }
             .foregroundStyle(.cyan)
             Spacer()
@@ -112,6 +118,13 @@ struct GameView: View {
             }
             
         }
+        .alert("New Highscore!", isPresented: $newScore) {
+            TextField("What is your name?", text: $addedName)
+            Button("Add") {
+                
+            }
+        }
+
         .onAppear() {
             generateLetters()
 
