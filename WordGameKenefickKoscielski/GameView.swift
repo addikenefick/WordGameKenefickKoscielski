@@ -28,68 +28,65 @@ struct GameView: View {
     @State var notReal = false
     
     var body: some View {
-        VStack {
-            
-            Spacer()
-            Button("Restart"){
-                generateLetters()
-                if points>highscore{
-                    newScore = true
-                }
-            }
-            .foregroundStyle(.cyan)
-            Spacer()
-            Text("Points: \(points)")
-                .font(.title)
-            
-            Spacer()
-            
-            HStack {
-                Button("Get new Consonant (30 Points)") {
-                    
-                }
-                .padding(10)
-                .background(.black)
-                .foregroundStyle(.white)
-                .cornerRadius(10)
+        NavigationStack {
+            VStack {
                 
-                Button("Get new Vowel (50 Points)") {
+                Spacer()
+                Button("Restart"){
+                    generateLetters()
+                    if points>highscore{
+                        newScore = true
+                    }
+                }
+                .foregroundStyle(.cyan)
+                Spacer()
+                Text("Points: \(points)")
+                    .font(.title)
+                
+                Spacer()
+                
+                HStack {
+                    NavigationLink("Get new Consonant (30 Points)", destination: NewLetterView(changeLetters: consonantLetters))
+                    .padding(10)
+                    .background(.black)
+                    .foregroundStyle(.white)
+                    .cornerRadius(10)
                     
+                    NavigationLink("Get new Vowel", destination: NewLetterView(changeLetters: vowelLetters))
+                    .padding(10)
+                    .background(.blue)
+                    .foregroundStyle(.white)
+                    .cornerRadius(10)
                 }
-                .padding(10)
-                .background(.blue)
-                .foregroundStyle(.white)
-                .cornerRadius(10)
-            }
-            
-            Spacer()
-            Text(" \(word) ")
-                .font(.largeTitle)
-            HStack {
-                ForEach(consonantLetters, id: \.self) { letter in
-                    Button(letter) {
-                        word += letter
+                
+                Spacer()
+                Text(" \(word) ")
+                    .font(.largeTitle)
+                HStack {
+                    ForEach(consonantLetters, id: \.self) { letter in
+                        Button(letter) {
+                            word += letter
+                        }
+                        .frame(width: 50, height: 50)
+                        .background(Color.black)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
                     }
-                    .frame(width: 50, height: 50)
-                    .background(Color.black)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
                 }
-            }
-            
-            HStack {
-                ForEach(vowelLetters, id: \.self) { letter in
-                    Button(letter) {
-                        word += letter
+                
+                HStack {
+                    ForEach(vowelLetters, id: \.self) { letter in
+                        Button(letter) {
+                            word += letter
+                        }
+                        .frame(width: 50, height: 50)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
                     }
-                    .frame(width: 50, height: 50)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
                 }
-            }
-            Spacer()
-           
+                Spacer()
+                
                 Button("Submit") {
                     print(word)
                     getDictionary()
@@ -98,42 +95,44 @@ struct GameView: View {
                 .background(Color.green)
                 .foregroundColor(.white)
                 .cornerRadius(10)
-            HStack{
-                Button("Delete"){
-                    if !word.isEmpty{
-                        word.removeLast()
+                HStack{
+                    Button("Delete"){
+                        if !word.isEmpty{
+                            word.removeLast()
+                        }
                     }
+                    .padding(10)
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    Button("Clear"){
+                        word = ""
+                    }
+                    .padding(10)
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
                 }
-                .padding(10)
-                .background(Color.red)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-                Button("Clear"){
-                    word = ""
+                
+            }
+            .alert("New Highscore!", isPresented: $newScore) {
+                TextField("What is your name?", text: $addedName)
+                Button("Add") {
+                    
                 }
-                .padding(10)
-                .background(Color.red)
-                .foregroundColor(.white)
-                .cornerRadius(10)
             }
             
-        }
-        .alert("New Highscore!", isPresented: $newScore) {
-            TextField("What is your name?", text: $addedName)
-            Button("Add") {
+            .onAppear() {
+                generateLetters()
+                
+            }
+            
+            .alert("Not a real word", isPresented: $notReal) {
                 
             }
         }
-
-        .onAppear() {
-            generateLetters()
-
-        }
-        
-        .alert("Not a real word", isPresented: $notReal) {
-            
-        }
     }
+    
     func generateLetters() {
         let shuffledConsonants = consonants.shuffled()
         consonantLetters = Array(shuffledConsonants.prefix(6))
@@ -143,6 +142,7 @@ struct GameView: View {
         
         word = ""
     }
+    
     func getDictionary() {
         
         let session = URLSession.shared
