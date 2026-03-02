@@ -35,6 +35,27 @@ struct GameView: View {
             Spacer()
             Text("Points: \(points)")
                 .font(.title)
+            
+            Spacer()
+            
+            HStack {
+                Button("Get new Consonant (30 Points)") {
+                    
+                }
+                .padding(10)
+                .background(.black)
+                .foregroundStyle(.white)
+                .cornerRadius(10)
+                
+                Button("Get new Vowel (50 Points)") {
+                    
+                }
+                .padding(10)
+                .background(.blue)
+                .foregroundStyle(.white)
+                .cornerRadius(10)
+            }
+            
             Spacer()
             Text(" \(word) ")
                 .font(.largeTitle)
@@ -124,7 +145,7 @@ struct GameView: View {
                 if let data = data {
                     //print("\(data)")
                     //print(data)
-                    if let jsonObj = try? JSONSerialization.jsonObject(with: data) as? [NSDictionary] {
+                    if (try? JSONSerialization.jsonObject(with: data) as? [NSDictionary]) != nil {
                         //print(jsonObj.count)
                         //print(jsonObj[0])
                         
