@@ -46,13 +46,13 @@ struct GameView: View {
                 Spacer()
                 
                 HStack {
-                    NavigationLink("Get new Consonant (30 Points)", destination: NewLetterView(changeLetters: consonantLetters))
+                    NavigationLink("Get new Consonant (30 Points)", destination: NewLetterView(changeLetters: consonantLetters, vor: 1))
                     .padding(10)
                     .background(.black)
                     .foregroundStyle(.white)
                     .cornerRadius(10)
                     
-                    NavigationLink("Get new Vowel", destination: NewLetterView(changeLetters: vowelLetters))
+                    NavigationLink("Get new Vowel", destination: NewLetterView(changeLetters: vowelLetters, vor: 2))
                     .padding(10)
                     .background(.blue)
                     .foregroundStyle(.white)
