@@ -9,23 +9,24 @@ import SwiftData
 import SwiftUI
 
 struct LeaderboardView: View {
-    @State var scores: [Player]
+    var scores: [Player]
+
     var body: some View {
         VStack{
             Text("Leaderboard")
                 .font(.largeTitle)
                 .bold()
                 .fontDesign(.serif)
-                .foregroundColor(.black)
-            List{
-                HStack{
-                    ForEach(scores){s in
-                        Text("\(s.name)")
-                        Text("\(s.score)")
+            
+            List {
+                ForEach(scores) { s in
+                    HStack {
+                        Text(s.name)
+                        Spacer()
+                        Text(s.score)
                     }
                 }
             }
         }
     }
 }
-

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct GameView: View {
+    @Binding var thisPlayer: [Player]
+    @State var thisPoints = ""
     @State var newScore = false
     @State var addedName = ""
     @State var highscore = 0
@@ -37,6 +39,8 @@ struct GameView: View {
                     if points>highscore{
                         newScore = true
                     }
+                    thisPoints = "\(points)"
+                    points = 0
                 }
                 .foregroundStyle(.cyan)
                 Spacer()
@@ -118,8 +122,8 @@ struct GameView: View {
             .alert("New Highscore!", isPresented: $newScore) {
                 TextField("What is your name?", text: $addedName)
                 Button("Add") {
-                    
-                }
+                    let newPlayer = Player(name: addedName, score: thisPoints)
+                    thisPlayer.append(newPlayer)            }
             }
             
             .onAppear() {
@@ -181,6 +185,3 @@ struct GameView: View {
     }
 }
 
-#Preview {
-    GameView()
-}

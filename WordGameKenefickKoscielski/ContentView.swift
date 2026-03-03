@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var leaderboard: [Player] = []
     var body: some View {
         NavigationStack {
             VStack {
@@ -11,7 +12,7 @@ struct ContentView: View {
                     .foregroundColor(.black)
                 
                 NavigationLink("PLAY") {
-                    GameView()
+                    GameView(thisPlayer: $leaderboard)
                 }
                 .bold()
                 .frame(width: 130, height: 40)
@@ -21,7 +22,7 @@ struct ContentView: View {
                 .padding()
                 Spacer()
                 NavigationLink("View Leaderboard") {
-                    LeaderboardView(scores: [])
+                    LeaderboardView(scores: leaderboard)
                 }
                 .bold()
                 .frame(width: 80, height: 40)

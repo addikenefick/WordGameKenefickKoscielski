@@ -10,8 +10,8 @@ import Foundation
 class Player: Identifiable {
     let id = UUID()
     var name: String
-    var score: Int
-    init(name: String, score: Int) {
+    var score: String
+    init(name: String, score: String) {
         self.name = name
         self.score = score
     }
