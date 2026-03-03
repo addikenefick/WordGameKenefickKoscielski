@@ -55,12 +55,14 @@ struct GameView: View {
                     .background(.black)
                     .foregroundStyle(.white)
                     .cornerRadius(10)
+                    .navigationBarBackButtonHidden(true)
                     
-                    NavigationLink("Get new Vowel", destination: NewLetterView(changeLetters: vowelLetters, vor: 2))
+                    NavigationLink("Get new Vowel (50 Points)", destination: NewLetterView(changeLetters: vowelLetters, vor: 2))
                     .padding(10)
                     .background(.blue)
                     .foregroundStyle(.white)
                     .cornerRadius(10)
+                    .navigationBarBackButtonHidden(true)
                 }
                 
                 Spacer()
