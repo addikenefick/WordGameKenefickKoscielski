@@ -30,9 +30,20 @@ struct GameView: View {
     
     @State var notReal = false
     
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         NavigationStack {
             VStack {
+                
+                Button("Back") {
+                    dismiss()
+                }
+                .padding(10)
+                .frame(alignment: .leading)
+                .background(.red)
+                .foregroundStyle(.white)
+                .cornerRadius(10)
                 
                 Spacer()
                 Button("Restart"){

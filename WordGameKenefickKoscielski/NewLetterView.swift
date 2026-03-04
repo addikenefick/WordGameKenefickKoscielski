@@ -48,6 +48,7 @@ struct NewLetterView: View {
                 Button("Cancel") {
                     dismiss()
                 }
+                .padding(10)
                 .foregroundStyle(.white)
                 .background(.red)
                 .cornerRadius(10)

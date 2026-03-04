@@ -4,7 +4,9 @@ import FirebaseCore
 import FirebaseDatabase
 struct ContentView: View {
     @State var leaderboard: [Player] = []
+    
     var ref = Database.database().reference()
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -23,7 +25,6 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .padding()
-                .navigationBarBackButtonHidden(false)
                 
                 Spacer()
                 NavigationLink("View Leaderboard") {
