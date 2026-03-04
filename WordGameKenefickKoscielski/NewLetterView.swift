@@ -21,11 +21,15 @@ struct NewLetterView: View {
     
     @State var vor: Int
     
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         NavigationStack {
             VStack {
                 
                 Text("Select a Letter to Change")
+                
+                Spacer()
                 
                 HStack {
                     ForEach(0..<changeLetters.count, id: \.self) { i in
@@ -38,6 +42,15 @@ struct NewLetterView: View {
                         .cornerRadius(8)
                     }
                 }
+                
+                Spacer()
+                
+                Button("Cancel") {
+                    dismiss()
+                }
+                .foregroundStyle(.white)
+                .background(.red)
+                .cornerRadius(10)
                 
             }
             
@@ -52,7 +65,7 @@ struct NewLetterView: View {
             for var i in 0..<changeLetters.count {
                 if changeLetters[i] != consonants[ran] {
                     count += 1
-                    if count == consonants.count {
+                    if count == changeLetters.count {
                         changeLetters[num] = consonants[ran]
                     }
                     else {
@@ -67,7 +80,7 @@ struct NewLetterView: View {
             for var i in 0..<changeLetters.count {
                 if changeLetters[i] != vowels[ran] {
                     count += 1
-                    if count == vowels.count {
+                    if count == changeLetters.count {
                         changeLetters[num] = vowels[ran]
                     }
                     else {
@@ -78,6 +91,7 @@ struct NewLetterView: View {
                 }
             }
         }
+        dismiss()
     }
 }
 

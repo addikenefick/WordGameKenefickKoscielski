@@ -129,7 +129,9 @@ struct GameView: View {
             }
             
             .onAppear() {
-                generateLetters()
+                if vowelLetters.isEmpty && consonantLetters.isEmpty {
+                    generateLetters()
+                }
                 
             }
             
