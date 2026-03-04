@@ -4,13 +4,10 @@
 //
 //  Created by ADDISON KENEFICK on 2/23/26.
 //
-
 import SwiftData
 import SwiftUI
-
 struct LeaderboardView: View {
     var scores: [Player]
-
     var body: some View {
         VStack{
             Text("Leaderboard")
@@ -30,3 +27,10 @@ struct LeaderboardView: View {
         }
     }
 }
+
+
+
+
+
+
+

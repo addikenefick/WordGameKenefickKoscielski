@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseDatabaseInternal
 
 struct GameView: View {
     @Binding var thisPlayer: [Player]
@@ -25,7 +26,7 @@ struct GameView: View {
         "B","C","D","F","G","H","J","K","L","M",
         "N","P","Q","R","S","T","V","W","X","Y","Z"]
     
-    @State var points = 0
+    @State var points = 1
     
     @State var notReal = false
     
@@ -125,7 +126,14 @@ struct GameView: View {
                 TextField("What is your name?", text: $addedName)
                 Button("Add") {
                     let newPlayer = Player(name: addedName, score: thisPoints)
-                    thisPlayer.append(newPlayer)            }
+                    thisPlayer.append(newPlayer)
+                    
+                    let ref = Database.database().reference()
+                    ref.child("leaderboard").childByAutoId().setValue([
+                        "name": addedName,
+                        "score": thisPoints
+                    ])
+                }
             }
             
             .onAppear() {
