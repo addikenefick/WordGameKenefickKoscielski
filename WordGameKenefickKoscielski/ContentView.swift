@@ -40,6 +40,7 @@ struct ContentView: View {
             
             .padding()
             .onAppear(){
+                leaderboard.removeAll()
                 firebaseStuff()
             }
         }
