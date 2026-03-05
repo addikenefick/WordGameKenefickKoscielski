@@ -64,14 +64,14 @@ struct GameView: View {
                 Spacer()
                 
                 HStack {
-                    NavigationLink("Get new Consonant (30 Points)", destination: NewLetterView(changeLetters: consonantLetters, vor: 1))
+                    NavigationLink("Get new \nConsonant (30 Points)", destination: NewLetterView(changeLetters: $consonantLetters, vor: 1))
                     .padding(10)
                     .background(.black)
                     .foregroundStyle(.white)
                     .cornerRadius(10)
                     .navigationBarBackButtonHidden(true)
                     
-                    NavigationLink("Get new Vowel (50 Points)", destination: NewLetterView(changeLetters: vowelLetters, vor: 2))
+                    NavigationLink("Get new \nVowel (50 Points)", destination: NewLetterView(changeLetters: $vowelLetters, vor: 2))
                     .padding(10)
                     .background(.blue)
                     .foregroundStyle(.white)

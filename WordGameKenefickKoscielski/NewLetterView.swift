@@ -9,15 +9,13 @@ import SwiftUI
 
 struct NewLetterView: View {
     
-    @State var changeLetters: [String]
+    @Binding var changeLetters: [String]
     
     @State var vowels = ["A","E","I","O","U"]
     
     @State var consonants = [
         "B","C","D","F","G","H","J","K","L","M",
         "N","P","Q","R","S","T","V","W","X","Y","Z"]
-    
-    @State var goBack = false
     
     @State var vor: Int
     
@@ -68,12 +66,13 @@ struct NewLetterView: View {
                     count += 1
                     if count == changeLetters.count {
                         changeLetters[num] = consonants[ran]
+                        break;
                     }
-                    else {
-                        i = 0
-                        ran = Int.random(in: 0..<vowels.count)
-                        count = 0
-                    }
+                }
+                else {
+                    i = -1
+                    count = 0
+                    ran = Int.random(in: 0..<consonants.count)
                 }
             }
         } else {
@@ -83,12 +82,13 @@ struct NewLetterView: View {
                     count += 1
                     if count == changeLetters.count {
                         changeLetters[num] = vowels[ran]
+                        break;
                     }
-                    else {
-                        i = 0
-                        ran = Int.random(in: 0..<vowels.count)
-                        count = 0
-                    }
+                }
+                else {
+                    i = -1
+                    count = 0
+                    ran = Int.random(in: 0..<vowels.count)
                 }
             }
         }
