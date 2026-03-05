@@ -4,7 +4,7 @@ import FirebaseCore
 import FirebaseDatabase
 struct ContentView: View {
     @State var leaderboard: [Player] = []
-    
+    @AppStorage("personalHighScore") var personalHighScore = 0
     var ref = Database.database().reference()
 
     var body: some View {
@@ -17,7 +17,7 @@ struct ContentView: View {
                     .foregroundColor(.black)
                 
                 NavigationLink("PLAY") {
-                    GameView(thisPlayer: $leaderboard)
+                    GameView(thisPlayer: $leaderboard, personalHighScore: $personalHighScore)
                 }
                 .bold()
                 .frame(width: 130, height: 40)

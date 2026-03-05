@@ -10,10 +10,10 @@ import FirebaseDatabaseInternal
 
 struct GameView: View {
     @Binding var thisPlayer: [Player]
+    @Binding var personalHighScore: Int
     @State var thisPoints = ""
     @State var newScore = false
     @State var addedName = ""
-    @State var highscore = 0
     @State var consonantLetters: [String] = []
     
     @State var vowelLetters: [String] = []
@@ -27,7 +27,6 @@ struct GameView: View {
         "N","P","Q","R","S","T","V","W","X","Y","Z"]
     
     @State var points = 0
-    
     @State var notReal = false
     
     @Environment(\.dismiss) private var dismiss
@@ -48,9 +47,12 @@ struct GameView: View {
                 Spacer()
                 Button("Restart"){
                     generateLetters()
-                    if points>highscore{
+
+                    if points > personalHighScore {
+                        personalHighScore = points
                         newScore = true
                     }
+
                     thisPoints = "\(points)"
                     points = 0
                 }
