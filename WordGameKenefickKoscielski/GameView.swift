@@ -31,6 +31,14 @@ struct GameView: View {
     
     @Environment(\.dismiss) private var dismiss
     
+    @State var over30 = true
+    
+    @State var over50 = true
+    
+    @State var wordsPlayed: [String] = []
+    
+    @State var alreadyPlayed = false
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -64,19 +72,21 @@ struct GameView: View {
                 Spacer()
                 
                 HStack {
-                    NavigationLink("Get new \nConsonant (30 Points)", destination: NewLetterView(changeLetters: $consonantLetters, vor: 1))
+                    NavigationLink("Get new \nConsonant (30 Points)", destination: NewLetterView(changeLetters: $consonantLetters, points: $points, vor: 1))
                     .padding(10)
                     .background(.black)
                     .foregroundStyle(.white)
                     .cornerRadius(10)
                     .navigationBarBackButtonHidden(true)
+                    .disabled(over30)
                     
-                    NavigationLink("Get new \nVowel (50 Points)", destination: NewLetterView(changeLetters: $vowelLetters, vor: 2))
+                    NavigationLink("Get new \nVowel (50 Points)", destination: NewLetterView(changeLetters: $vowelLetters, points: $points, vor: 2))
                     .padding(10)
                     .background(.blue)
                     .foregroundStyle(.white)
                     .cornerRadius(10)
                     .navigationBarBackButtonHidden(true)
+                    .disabled(over50)
                 }
                 
                 Spacer()
@@ -109,7 +119,8 @@ struct GameView: View {
                 
                 Button("Submit") {
                     print(word)
-                    getDictionary()
+                    getDictionary(theWord: word)
+                    word = ""
                 }
                 .padding(10)
                 .background(Color.green)
@@ -153,10 +164,14 @@ struct GameView: View {
                 if vowelLetters.isEmpty && consonantLetters.isEmpty {
                     generateLetters()
                 }
-                
+                over()
             }
             
             .alert("Not a real word", isPresented: $notReal) {
+                
+            }
+            
+            .alert("Already played this word", isPresented: $alreadyPlayed) {
                 
             }
         }
@@ -172,11 +187,26 @@ struct GameView: View {
         word = ""
     }
     
-    func getDictionary() {
+    func over() {
+        if points >= 30 {
+            over30 = false
+            if points >= 50 {
+                over50 = false
+            }
+            else {
+                over50 = true
+            }
+        } else {
+            over30 = true
+            over50 = true
+        }
+    }
+    
+    func getDictionary(theWord: String) {
         
         let session = URLSession.shared
         
-        let dictionaryURL = URL(string: "https://dictionaryapi.com/api/v3/references/collegiate/json/\(word)?key=587f7e0d-5c50-4769-a331-613f3d481f68")!
+        let dictionaryURL = URL(string: "https://dictionaryapi.com/api/v3/references/collegiate/json/\(theWord)?key=587f7e0d-5c50-4769-a331-613f3d481f68")!
         
         let dataTask = session.dataTask(with: dictionaryURL) {
             (data: Data?, response: URLResponse?, error: Error?) in
@@ -191,7 +221,25 @@ struct GameView: View {
                         //print(jsonObj.count)
                         //print(jsonObj[0])
                         
-                        points += word.count
+                        if wordsPlayed.contains(theWord) {
+                            alreadyPlayed = true
+                        } else {
+                            points += theWord.count
+                            
+                            if points >= 30 {
+                                over30 = false
+                                if points >= 50 {
+                                    over50 = false
+                                } else {
+                                    over50 = true
+                                }
+                            } else {
+                                over30 = true
+                                over50 = true
+                            }
+                            
+                            wordsPlayed.append(theWord)
+                        }
                         
                         //if let y = jsonObj[0]["date"] as? String {
                             //print(y)

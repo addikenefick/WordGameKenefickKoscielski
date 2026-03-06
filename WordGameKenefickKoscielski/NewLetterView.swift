@@ -11,6 +11,8 @@ struct NewLetterView: View {
     
     @Binding var changeLetters: [String]
     
+    @Binding var points: Int
+    
     @State var vowels = ["A","E","I","O","U"]
     
     @State var consonants = [
@@ -58,39 +60,27 @@ struct NewLetterView: View {
     
     func randomizeLetter(num: Int) {
         var ran: Int
-        var count = 0
+        
         if vor == 1 {
             ran = Int.random(in: 0..<consonants.count)
-            for var i in 0..<changeLetters.count {
-                if changeLetters[i] != consonants[ran] {
-                    count += 1
-                    if count == changeLetters.count {
-                        changeLetters[num] = consonants[ran]
-                        break;
-                    }
-                }
-                else {
-                    i = -1
-                    count = 0
-                    ran = Int.random(in: 0..<consonants.count)
-                }
+            
+            while changeLetters.contains(consonants[ran]) {
+                ran = Int.random(in: 0..<consonants.count)
             }
+
+            changeLetters[num] = consonants[ran]
+            
+            points -= 30
         } else {
             ran = Int.random(in: 0..<vowels.count)
-            for var i in 0..<changeLetters.count {
-                if changeLetters[i] != vowels[ran] {
-                    count += 1
-                    if count == changeLetters.count {
-                        changeLetters[num] = vowels[ran]
-                        break;
-                    }
-                }
-                else {
-                    i = -1
-                    count = 0
-                    ran = Int.random(in: 0..<vowels.count)
-                }
+            
+            while changeLetters.contains(consonants[ran]) {
+                ran = Int.random(in: 0..<consonants.count)
             }
+            
+            changeLetters[num] = consonants[ran]
+            
+            points -= 50
         }
         dismiss()
     }
