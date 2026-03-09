@@ -43,7 +43,15 @@ struct GameView: View {
         NavigationStack {
             VStack {
                 
-                Button("Back") {
+                Button("End Game") {
+                    if points > personalHighScore {
+                        personalHighScore = points
+                        newScore = true
+                    }
+                    
+                    thisPoints = "\(points)"
+                    points = 0
+                    
                     dismiss()
                 }
                 .padding(10)
@@ -51,23 +59,6 @@ struct GameView: View {
                 .background(.red)
                 .foregroundStyle(.white)
                 .cornerRadius(10)
-                
-                Spacer()
-                Button("Restart"){
-                    generateLetters()
-
-                    if points > personalHighScore {
-                        personalHighScore = points
-                        newScore = true
-                    }
-
-                    thisPoints = "\(points)"
-                    points = 0
-                }
-                .foregroundStyle(.cyan)
-                Spacer()
-                Text("Points: \(points)")
-                    .font(.title)
                 
                 Spacer()
                 
