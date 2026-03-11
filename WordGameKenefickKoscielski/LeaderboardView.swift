@@ -16,11 +16,13 @@ struct LeaderboardView: View {
                 .fontDesign(.serif)
             
             List {
-                ForEach(scores) { s in
-                    HStack {
-                        Text(s.name)
-                        Spacer()
-                        Text(s.score)
+                ForEach(0..<scores.count, id: \.self) { s in
+                    if s > 100 {
+                        HStack {
+                            Text(scores[s].name)
+                            Spacer()
+                            Text(scores[s].score)
+                        }
                     }
                 }
             }

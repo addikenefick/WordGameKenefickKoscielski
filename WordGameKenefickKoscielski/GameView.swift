@@ -27,7 +27,7 @@ struct GameView: View {
         "B","C","D","F","G","H","J","K","L","M",
         "N","P","Q","R","S","T","V","W","X","Y","Z"]
     
-    @State var points = 15
+    @State var points = 0
     @State var notReal = false
     
     @Environment(\.dismiss) private var dismiss
@@ -164,8 +164,11 @@ struct GameView: View {
                         
                         thisPlayer.append(newPlayer)
                     }
+                    dismiss()
                 }
-            }            .onAppear() {
+            }
+            
+            .onAppear() {
                 if vowelLetters.isEmpty && consonantLetters.isEmpty {
                     generateLetters()
                 }
