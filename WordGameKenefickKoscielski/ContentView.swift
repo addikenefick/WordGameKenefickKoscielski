@@ -5,6 +5,9 @@ import FirebaseDatabase
 struct ContentView: View {
     @State var leaderboard: [Player] = []
     @AppStorage("personalHighScore") var personalHighScore = 0
+    @State var showName = false
+    @State var enteredName = ""
+    @AppStorage("playerName") var playerName = ""
     var ref = Database.database().reference()
 
     var body: some View {
@@ -15,10 +18,18 @@ struct ContentView: View {
                     .bold()
                     .fontDesign(.serif)
                     .foregroundColor(.black)
+                if playerName != "" {
+                                    Text("Hi \(playerName) your highscore is: \(personalHighScore)")
+                                        .font(.title3)
+                                        .padding()
+                                }
                 
                 NavigationLink("PLAY") {
                     GameView(thisPlayer: $leaderboard, personalHighScore: $personalHighScore)
+                 
+
                 }
+                
                 .bold()
                 .frame(width: 130, height: 40)
                 .background(.black)
@@ -42,6 +53,16 @@ struct ContentView: View {
             .onAppear(){
                 leaderboard.removeAll()
                 firebaseStuff()
+                if playerName == "" {
+                        showName = true
+                    }
+            }
+            .alert("Enter Your Name", isPresented: $showName) {
+                TextField("Name", text: $enteredName)
+
+                Button("Save") {
+                    playerName = enteredName
+                }
             }
         }
     }

@@ -10,6 +10,7 @@ import FirebaseDatabaseInternal
 
 struct GameView: View {
     @Binding var thisPlayer: [Player]
+    @AppStorage("playerName") var playerName = ""
     @Binding var personalHighScore: Int
     @State var thisPoints = ""
     @State var newScore = false
@@ -26,7 +27,7 @@ struct GameView: View {
         "B","C","D","F","G","H","J","K","L","M",
         "N","P","Q","R","S","T","V","W","X","Y","Z"]
     
-    @State var points = 0
+    @State var points = 15
     @State var notReal = false
     
     @Environment(\.dismiss) private var dismiss
@@ -44,15 +45,15 @@ struct GameView: View {
             VStack {
                 
                 Button("End Game") {
+                    
+                    thisPoints = "\(points)"
+                    
                     if points > personalHighScore {
                         personalHighScore = points
                         newScore = true
+                    } else {
+                        dismiss()
                     }
-                    
-                    thisPoints = "\(points)"
-                    points = 0
-                    
-                    dismiss()
                 }
                 .padding(10)
                 .frame(alignment: .leading)
@@ -61,7 +62,7 @@ struct GameView: View {
                 .cornerRadius(10)
                 
                 Spacer()
-                
+                Text("Points: \(points)")
                 HStack {
                     NavigationLink("Get new \nConsonant (30 Points)", destination: NewLetterView(changeLetters: $consonantLetters, points: $points, vor: 1))
                     .padding(10)
@@ -138,20 +139,33 @@ struct GameView: View {
                 
             }
             .alert("New Highscore!", isPresented: $newScore) {
-                TextField("What is your name?", text: $addedName)
-                Button("Add") {
-                    let newPlayer = Player(name: addedName, score: thisPoints)
-                    thisPlayer.append(newPlayer)
-                    
+                Button("yay") {
                     let ref = Database.database().reference()
-                    ref.child("leaderboard").childByAutoId().setValue([
-                        "name": addedName,
-                        "score": thisPoints
-                    ])
+
+                    if let existingPlayer = thisPlayer.first(where: { $0.name == playerName }) {
+
+                        ref.child("leaderboard").child(existingPlayer.key).updateChildValues([
+                            "score": thisPoints
+                        ])
+                        
+                        existingPlayer.score = thisPoints
+
+                    } else {
+
+                        let newRef = ref.child("leaderboard").childByAutoId()
+                        
+                        newRef.setValue([
+                            "name": playerName,
+                            "score": thisPoints
+                        ])
+                        
+                        let newPlayer = Player(name: playerName, score: thisPoints)
+                        newPlayer.key = newRef.key ?? ""
+                        
+                        thisPlayer.append(newPlayer)
+                    }
                 }
-            }
-            
-            .onAppear() {
+            }            .onAppear() {
                 if vowelLetters.isEmpty && consonantLetters.isEmpty {
                     generateLetters()
                 }
