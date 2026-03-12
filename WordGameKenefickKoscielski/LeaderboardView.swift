@@ -17,11 +17,12 @@ struct LeaderboardView: View {
             
             List {
                 ForEach(0..<scores.count, id: \.self) { s in
-                    if s > 100 {
+                    let newScores = scores.sorted(by: { $0.score > $1.score })
+                    if s < 100 {
                         HStack {
-                            Text(scores[s].name)
+                            Text("\(s + 1). \(newScores[s].name)")
                             Spacer()
-                            Text(scores[s].score)
+                            Text("\(newScores[s].score)")
                         }
                     }
                 }
