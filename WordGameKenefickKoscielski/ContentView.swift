@@ -9,6 +9,8 @@ struct ContentView: View {
     @State var enteredName = ""
     @AppStorage("playerName") var playerName = ""
     var ref = Database.database().reference()
+    
+    @State var exists = false
 
     var body: some View {
         NavigationStack {
@@ -69,7 +71,20 @@ struct ContentView: View {
                 TextField("Name", text: $enteredName)
 
                 Button("Save") {
-                    playerName = enteredName
+                    if leaderboard.contains(where: { $0.name == enteredName }) == false {
+                        playerName = enteredName
+                    }
+                    else {
+                        exists = true
+                    }
+                }
+            }
+            
+            .alert("Name Already Taken", isPresented: $exists) {
+                Button("Okay") {
+                    exists = false
+                    enteredName = ""
+                    showName = true
                 }
             }
         }
