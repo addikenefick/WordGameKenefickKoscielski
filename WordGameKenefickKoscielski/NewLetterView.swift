@@ -62,26 +62,28 @@ struct NewLetterView: View {
         var ran: Int
         
         if vor == 1 {
+            
             ran = Int.random(in: 0..<consonants.count)
             
             while changeLetters.contains(consonants[ran]) {
                 ran = Int.random(in: 0..<consonants.count)
             }
-
-            changeLetters[num] = consonants[ran]
             
+            changeLetters[num] = consonants[ran]
             points -= 30
+            
         } else {
+            
             ran = Int.random(in: 0..<vowels.count)
             
-            while changeLetters.contains(consonants[ran]) {
-                ran = Int.random(in: 0..<consonants.count)
+            while changeLetters.contains(vowels[ran]) {
+                ran = Int.random(in: 0..<vowels.count)
             }
             
-            changeLetters[num] = consonants[ran]
-            
+            changeLetters[num] = vowels[ran]
             points -= 50
         }
+        
         dismiss()
     }
 }

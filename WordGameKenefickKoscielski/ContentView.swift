@@ -18,11 +18,15 @@ struct ContentView: View {
                     .bold()
                     .fontDesign(.serif)
                     .foregroundColor(.black)
+                Spacer()
                 if playerName != "" {
-                                    Text("Hi \(playerName) your highscore is: \(personalHighScore)")
-                                        .font(.title3)
-                                        .padding()
-                                }
+                                Text("Hi \(playerName)!")
+                                    .font(.title3)
+                                Text("High Score: \(personalHighScore)")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                            }
+
                 
                 NavigationLink("PLAY") {
                     GameView(thisPlayer: $leaderboard, personalHighScore: $personalHighScore)
@@ -31,22 +35,26 @@ struct ContentView: View {
                 }
                 
                 .bold()
-                .frame(width: 130, height: 40)
-                .background(.black)
-                .foregroundColor(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .padding()
+                           .frame(maxWidth: .infinity)
+                           .frame(height: 50)
+                           .background(Color.black)
+                           .foregroundColor(.white)
+                           .clipShape(RoundedRectangle(cornerRadius: 14))
+                           .shadow(radius: 3)
+                           .padding()
                 
                 Spacer()
                 NavigationLink("View Leaderboard") {
                     LeaderboardView(scores: leaderboard)
                 }
                 .bold()
-                .frame(width: 150, height: 40)
+                .frame(width: 155, height: 40)
                 .background(.black)
                 .foregroundColor(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .padding()
+                .shadow(radius: 3)
+
             }
             
             .padding()

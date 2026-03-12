@@ -42,7 +42,7 @@ struct GameView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 20) {
                 
                 Button("End Game") {
                     
@@ -63,36 +63,49 @@ struct GameView: View {
                 
                 Spacer()
                 Text("Points: \(points)")
-                HStack {
-                    NavigationLink("Get new \nConsonant (30 Points)", destination: NewLetterView(changeLetters: $consonantLetters, points: $points, vor: 1))
-                    .padding(10)
-                    .background(.black)
-                    .foregroundStyle(.white)
-                    .cornerRadius(10)
-                    .navigationBarBackButtonHidden(true)
-                    .disabled(over30)
-                    
-                    NavigationLink("Get new \nVowel (50 Points)", destination: NewLetterView(changeLetters: $vowelLetters, points: $points, vor: 2))
-                    .padding(10)
-                    .background(.blue)
-                    .foregroundStyle(.white)
-                    .cornerRadius(10)
-                    .navigationBarBackButtonHidden(true)
-                    .disabled(over50)
-                }
+                                   .bold()
+                                   .padding()
+                                   .font(.title)
+                               Text("Shop:")
+                                   .bold()
+                               HStack {
+                                   NavigationLink("Consonant \n(30 Points)", destination: NewLetterView(changeLetters: $consonantLetters, points: $points, vor: 1))
+                                   .padding(10)
+                                   .background(.black)
+                                   .foregroundStyle(.white)
+                                   .cornerRadius(10)
+                                   .navigationBarBackButtonHidden(true)
+                                   .disabled(over30)
+                                   
+                                   NavigationLink("Vowel \n(50 Points)", destination: NewLetterView(changeLetters: $vowelLetters, points: $points, vor: 2))
+                                   .padding(10)
+                                   .background(.blue)
+                                   .foregroundStyle(.white)
+                                   .cornerRadius(10)
+                                   .navigationBarBackButtonHidden(true)
+                                   .disabled(over50)
+                               }
+
                 
                 Spacer()
                 Text(" \(word) ")
-                    .font(.largeTitle)
+                    .font(.system(size: 40, weight: .bold))
+                                      .frame(maxWidth: .infinity)
+                                      .frame(height: 60)
+                                      .background(Color.gray.opacity(0.2))
+                                      .clipShape(RoundedRectangle(cornerRadius: 12))
+                                      .padding()
                 HStack {
                     ForEach(consonantLetters, id: \.self) { letter in
                         Button(letter) {
                             word += letter
                         }
-                        .frame(width: 50, height: 50)
-                        .background(Color.black)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                        .padding()
+                                              .frame(maxWidth: .infinity)
+                                              .background(Color.black)
+                                              .foregroundColor(.white)
+                                              .clipShape(RoundedRectangle(cornerRadius: 12))
+                                              .shadow(radius: 3)
                     }
                 }
                 
@@ -101,10 +114,12 @@ struct GameView: View {
                         Button(letter) {
                             word += letter
                         }
-                        .frame(width: 50, height: 50)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                        .padding()
+                                           .frame(maxWidth: 67)
+                                           .background(Color.blue)
+                                           .foregroundColor(.white)
+                                           .clipShape(RoundedRectangle(cornerRadius: 12))
+                                           .shadow(radius: 3)
                     }
                 }
                 Spacer()
@@ -118,6 +133,8 @@ struct GameView: View {
                 .background(Color.green)
                 .foregroundColor(.white)
                 .cornerRadius(10)
+                .shadow(radius: 3)
+
                 HStack{
                     Button("Delete"){
                         if !word.isEmpty{
@@ -128,6 +145,8 @@ struct GameView: View {
                     .background(Color.red)
                     .foregroundColor(.white)
                     .cornerRadius(10)
+                    .shadow(radius: 3)
+
                     Button("Clear"){
                         word = ""
                     }
@@ -135,6 +154,8 @@ struct GameView: View {
                     .background(Color.red)
                     .foregroundColor(.white)
                     .cornerRadius(10)
+                    .shadow(radius: 3)
+
                 }
                 
             }
