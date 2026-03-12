@@ -22,6 +22,7 @@ struct WordGameKenefickKoscielski: App {
     WindowGroup {
       NavigationView {
         ContentView()
+              .preferredColorScheme(.light)
       }
     }
   }
