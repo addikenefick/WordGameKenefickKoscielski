@@ -7,7 +7,9 @@
 import SwiftData
 import SwiftUI
 struct LeaderboardView: View {
-    var scores: [Player]
+    
+    @State var scores: [Player]
+    
     var body: some View {
         VStack{
             Text("Leaderboard")
@@ -17,12 +19,11 @@ struct LeaderboardView: View {
             
             List {
                 ForEach(0..<scores.count, id: \.self) { s in
-                    let newScores = scores.sorted(by: { $0.score > $1.score })
                     if s < 100 {
                         HStack {
-                            Text("\(s + 1). \(newScores[s].name)")
+                            Text("\(s + 1). \(scores[s].name)")
                             Spacer()
-                            Text("\(newScores[s].score)")
+                            Text("\(scores[s].score)")
                         }
                     }
                 }

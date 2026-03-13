@@ -47,7 +47,7 @@ struct ContentView: View {
                 
                 Spacer()
                 NavigationLink("View Leaderboard") {
-                    LeaderboardView(scores: leaderboard)
+                    LeaderboardView(scores: leaderboard.sorted(by: { $0.score > $1.score}), player: playerName)
                 }
                 .bold()
                 .frame(width: 155, height: 40)
@@ -65,7 +65,7 @@ struct ContentView: View {
                 firebaseStuff()
                 if playerName == "" {
                         showName = true
-                    }
+                }
             }
             .alert("Enter Your Name", isPresented: $showName) {
                 TextField("Name", text: $enteredName)
