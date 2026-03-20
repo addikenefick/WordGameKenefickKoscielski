@@ -47,7 +47,7 @@ struct ContentView: View {
                 
                 Spacer()
                 NavigationLink("View Leaderboard") {
-                    LeaderboardView(scores: leaderboard.sorted(by: { $0.score > $1.score}))
+                    LeaderboardView(scores: $leaderboard)
                 }
                 .bold()
                 .frame(width: 155, height: 40)

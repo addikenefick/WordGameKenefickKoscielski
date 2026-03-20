@@ -8,7 +8,7 @@ import SwiftData
 import SwiftUI
 struct LeaderboardView: View {
     
-    @State var scores: [Player]
+    @Binding var scores: [Player]
     
     var body: some View {
         VStack{
@@ -18,18 +18,20 @@ struct LeaderboardView: View {
                 .fontDesign(.serif)
             
             List {
-                ForEach(0..<scores.count, id: \.self) { s in
+                let sortedScores = scores.sorted { Int($0.score)! > Int($1.score)! }
+
+                ForEach(0..<sortedScores.count, id: \.self) { s in
                     if s < 100 {
                         HStack {
-                            Text("\(s + 1). \(scores[s].name)")
+                            Text("\(s + 1). \(sortedScores[s].name)")
                             Spacer()
-                            Text("\(scores[s].score)")
+                            Text("\(sortedScores[s].score)")
                         }
                     }
-                }
-            }
+                }            }
         }
     }
+    
 }
 
 
