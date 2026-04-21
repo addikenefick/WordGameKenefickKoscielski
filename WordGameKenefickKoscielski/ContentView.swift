@@ -1,7 +1,9 @@
 import SwiftUI
+import GoogleSignIn
 import FirebaseAuth
 import FirebaseCore
 import FirebaseDatabase
+
 struct ContentView: View {
     @State var leaderboard: [Player] = []
     @AppStorage("personalHighScore") var personalHighScore = 0
@@ -97,6 +99,20 @@ struct ContentView: View {
                 leaderboard.append(player)
             }
         }
+    }
+    
+    func application(
+      _ application: UIApplication,
+      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+      GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+        if error != nil || user == nil {
+          // Show the app's signed-out state.
+        } else {
+          // Show the app's signed-in state.
+        }
+      }
+      return true
     }
 }
 
