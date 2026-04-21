@@ -19,7 +19,7 @@ struct LeaderboardView: View {
             
             List {
                 let sortedScores = scores.sorted { Int($0.score)! > Int($1.score)! }
-
+                
                 ForEach(0..<sortedScores.count, id: \.self) { s in
                     if s < 100 {
                         HStack {
@@ -28,7 +28,8 @@ struct LeaderboardView: View {
                             Text("\(sortedScores[s].score)")
                         }
                     }
-                }            }
+                }
+            }
         }
     }
     
