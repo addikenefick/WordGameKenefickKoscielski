@@ -12,10 +12,14 @@ struct SettingsView: View {
         NavigationStack{
             VStack{
               Text("settings")
+                NavigationLink("login"){
+                    LogInView()
+                    }
+                }
             }
         }
     }
-}
+
 
 #Preview {
     SettingsView()
