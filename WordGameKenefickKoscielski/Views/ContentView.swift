@@ -9,6 +9,7 @@ struct ContentView: View {
     @AppStorage("personalHighScore") var personalHighScore = 0
     @State var showName = false
     @State var enteredName = ""
+    @State var selectedPage = "home"
     @AppStorage("playerName") var playerName = ""
     var ref = Database.database().reference()
     
@@ -17,50 +18,84 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Word Game")
-                    .font(.largeTitle)
-                    .bold()
-                    .fontDesign(.serif)
-                    .foregroundColor(.black)
-                Spacer()
-                if playerName != "" {
-                                Text("Hi \(playerName)!")
-                                    .font(.title3)
-                                Text("High Score: \(personalHighScore)")
-                                    .font(.headline)
-                                    .foregroundColor(.gray)
+               
+//                Spacer()
+//                if playerName != "" {
+//                                Text("Hi \(playerName)!")
+//                                    .font(.title3)
+//                                Text("High Score: \(personalHighScore)")
+//                                    .font(.headline)
+//                                    .foregroundColor(.gray)
+//                            }
+                if selectedPage == "play" {
+                            PlayView()
+                        } else if selectedPage == "settings" {
+                            SettingsView()
+                        } else {
+                            VStack {
+                                Text("Word Game")
+                                    .font(.largeTitle)
+                                    .bold()
+                                    .fontDesign(.serif)
+                                
+                                if playerName != "" {
+                                    Text("Hi \(playerName)!")
+                                    Text("High Score: \(personalHighScore)")
+                                        .foregroundColor(.gray)
+                                }
                             }
+                        }
+                        
+                        Spacer()
+                        
+                        HStack {
+                            Button {
+                                selectedPage = "home"
+                            } label: {
+                                VStack {
+                                    Image(systemName: "house")
+                                    Text("Home")
+                                }
+                            }
+                            
+                            Spacer()
+                            
+                            Button {
+                                selectedPage = "play"
+                            } label: {
+                                VStack {
+                                    Image(systemName: "gamecontroller")
+                                    Text("Play")
+                                }
+                            }
+                            
+                            Spacer()
+                            
+                            Button {
+                                selectedPage = "settings"
+                            } label: {
+                                VStack {
+                                    Image(systemName: "gear")
+                                    Text("Settings")
+                                }
+                            }
+                        }
+                        .padding()
+                        .foregroundColor(.black)
+                        .background(Color.lightgray)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
 
-                
-                NavigationLink("PLAY") {
-                    GameView(thisPlayer: $leaderboard, personalHighScore: $personalHighScore)
-                 
-
-                }
-                
-                .bold()
-                           .frame(maxWidth: .infinity)
-                           .frame(height: 50)
-                           .background(Color.black)
-                           .foregroundColor(.white)
-                           .clipShape(RoundedRectangle(cornerRadius: 14))
-                           .shadow(radius: 3)
-                           .padding()
-                
-                Spacer()
-                NavigationLink("View Leaderboard") {
-                    LeaderboardView(scores: $leaderboard)
-                }
-                .bold()
-                .frame(width: 155, height: 40)
-                .background(.black)
-                .foregroundColor(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .padding()
-                .shadow(radius: 3)
-
+//                NavigationLink("View Leaderboard") {
+//                    LeaderboardView(scores: $leaderboard)
+//                }
+//                .bold()
+//                .frame(width: 155, height: 40)
+//                .background(.black)
+//                .foregroundColor(.white)
+//                .clipShape(RoundedRectangle(cornerRadius: 15))
+//                .padding()
+//                .shadow(radius: 3)
             }
-            
             .padding()
             .onAppear(){
                 leaderboard.removeAll()
