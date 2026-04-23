@@ -114,6 +114,10 @@ struct ContentView: View {
       }
       return true
     }
+    
+    func signOut(sender: Any) {
+      GIDSignIn.sharedInstance.signOut()
+    }
 }
 
 
