@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PlayView: View {
+    @Binding var thisPlayer: [Player]
+    @Binding var personalHighScore: Int
     var body: some View {
         NavigationStack{
             VStack{
@@ -20,20 +22,35 @@ struct PlayView: View {
                     .fontDesign(.serif)
                     .font(.headline)
                 Spacer()
-                Button("Easy"){}
+                NavigationLink("Easy"){
+                    GameView(thisPlayer: $thisPlayer,
+                           personalHighScore: $personalHighScore,
+                           numConsonants: 10,
+                           numVowels: 5)
+                   
+                }
                 
                     
-                    .frame(maxWidth: 150, maxHeight: 70)
+                    .frame(maxWidth: 130, maxHeight: 50)
                     .background(.green)
                     .foregroundColor(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                     .shadow(radius: 3)
-                    .font(.title)
+                    .font(.title2)
                     .padding(10)
                     
-                Button("Medium"){}
+              
+                    NavigationLink("Medium") {
+                        GameView(
+                            thisPlayer: $thisPlayer,
+                            personalHighScore: $personalHighScore,
+                            numConsonants: 6,
+                            numVowels: 3
+                        )
+                    }
+                
                     .padding()
-                    .frame(maxWidth: 150, maxHeight: 70)
+                    .frame(maxWidth: 130, maxHeight: 50)
                     .background(.yellow)
                     .foregroundColor(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -42,14 +59,21 @@ struct PlayView: View {
                     .padding(10)
 
 
-                Button("Hard"){}
+                NavigationLink("Hard") {
+                    GameView(
+                        thisPlayer: $thisPlayer,
+                        personalHighScore: $personalHighScore,
+                        numConsonants: 5,
+                        numVowels: 2
+                    )
+                }
                     .padding()
-                    .frame(maxWidth: 150, maxHeight: 70)
+                    .frame(maxWidth: 130, maxHeight: 50)
                     .background(.red)
                     .foregroundColor(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                     .shadow(radius: 3)
-                    .font(.title)
+                    .font(.title2)
                     .padding(10)
 
 
@@ -61,6 +85,6 @@ Spacer()
         
 }
 
-#Preview {
-    PlayView()
-}
+//#Preview {
+//    PlayView()
+//}
