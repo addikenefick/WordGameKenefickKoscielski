@@ -20,9 +20,9 @@ struct LogInView: View {
             GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
                 // Check if `user` exists; otherwise, do something with `error`
                 if user != nil {
-                    print(user!)
+                    //print(user!)
                 } else {
-                    print(error!)
+                    //print(error!)
                 }
             }
         }
