@@ -20,7 +20,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		AF2FD3B12F48A22100720D6A /* Exceptions for "WordGameKenefickKoscielski" folder in "WordGameKenefickKoscielski" target */ = {
+		7903C3F12FA03DC200873AD0 /* Exceptions for "WordGameKenefickKoscielski" folder in "WordGameKenefickKoscielski" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -33,7 +33,7 @@
 		BDDCC2B92F474E2A006AFDA9 /* WordGameKenefickKoscielski */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				AF2FD3B12F48A22100720D6A /* Exceptions for "WordGameKenefickKoscielski" folder in "WordGameKenefickKoscielski" target */,
+				7903C3F12FA03DC200873AD0 /* Exceptions for "WordGameKenefickKoscielski" folder in "WordGameKenefickKoscielski" target */,
 			);
 			path = WordGameKenefickKoscielski;
 			sourceTree = "<group>";

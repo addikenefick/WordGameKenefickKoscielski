@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1094285887314-2a821uti5ectbhtfc9lsoo8bh4tptks9.apps.googleusercontent.com</string>
+	<string>1094285887314-5r71m8f2oal1t7vrp3r09gk40qp0vtjm.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.1094285887314-2a821uti5ectbhtfc9lsoo8bh4tptks9</string>
 	<key>API_KEY</key>
@@ -19,15 +19,15 @@
 	<key>STORAGE_BUCKET</key>
 	<string>wordgamekenefickkoscielski.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:1094285887314:ios:a50aedc784cbb1a5f71c8b</string>
 	<key>DATABASE_URL</key>

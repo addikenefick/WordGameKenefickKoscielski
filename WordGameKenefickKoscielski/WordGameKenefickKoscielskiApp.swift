@@ -29,6 +29,15 @@ struct WordGameKenefickKoscielski: App {
               .onOpenURL { url in
                   GIDSignIn.sharedInstance.handle(url)
               }
+              .onAppear {
+                  GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+                      // Check if `user` exists; otherwise, do something with `error`
+                      if user == nil {
+                          
+                      }
+                  }
+              }
+
       }
     }
   }

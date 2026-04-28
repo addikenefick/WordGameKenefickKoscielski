@@ -8,10 +8,12 @@ import Foundation
 import FirebaseCore
 import FirebaseDatabase
 class Player: Identifiable {
+    
     var id = UUID()
     var name: String
     var score: String
     var key: String = ""
+    
     init(name: String, score: String) {
         self.name = name
         self.score = score

@@ -40,6 +40,8 @@ struct GameView: View {
     @State var wordsPlayed: [String] = []
 
     @State var alreadyPlayed = false
+    
+    @State var gamemode: Int
 
     var body: some View {
         NavigationStack {
@@ -228,11 +230,27 @@ struct GameView: View {
     }
 
     func generateLetters() {
-        let shuffledConsonants = consonants.shuffled()
-        consonantLetters = Array(shuffledConsonants.prefix(6))
+        if gamemode == 1 {
+            let shuffledConsonants = consonants.shuffled()
+            consonantLetters = Array(shuffledConsonants.prefix(8))
 
-        let shuffledVowels = vowels.shuffled()
-        vowelLetters = Array(shuffledVowels.prefix(3))
+            let shuffledVowels = vowels.shuffled()
+            vowelLetters = Array(shuffledVowels.prefix(5))
+        } else {
+            if gamemode == 2 {
+                let shuffledConsonants = consonants.shuffled()
+                consonantLetters = Array(shuffledConsonants.prefix(6))
+
+                let shuffledVowels = vowels.shuffled()
+                vowelLetters = Array(shuffledVowels.prefix(3))
+            } else {
+                let shuffledConsonants = consonants.shuffled()
+                consonantLetters = Array(shuffledConsonants.prefix(4))
+
+                let shuffledVowels = vowels.shuffled()
+                vowelLetters = Array(shuffledVowels.prefix(2))
+            }
+        }
 
         word = ""
     }
@@ -299,9 +317,11 @@ struct GameView: View {
                         //}
 
                     } else {
+                        notReal = true
                         //print("Error: unable to convert json object")
                     }
                 } else {
+                    notReal = true
                     print("Error: did not receive data")
                 }
             }
