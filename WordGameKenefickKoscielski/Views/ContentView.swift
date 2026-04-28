@@ -28,7 +28,7 @@ struct ContentView: View {
 //                                    .foregroundColor(.gray)
 //                            }
                 if selectedPage == "play" {
-                            PlayView()
+                    PlayView(players: $leaderboard, personalHighscore: $personalHighScore)
                         } else if selectedPage == "settings" {
                             SettingsView()
                         } else {
@@ -42,6 +42,9 @@ struct ContentView: View {
                                     Text("Hi \(playerName)!")
                                     Text("High Score: \(personalHighScore)")
                                         .foregroundColor(.gray)
+                                }
+                                else {
+                                    Text("Playing as guest")
                                 }
                             }
                         }
@@ -104,7 +107,7 @@ struct ContentView: View {
                         showName = true
                 }
             }
-            .alert("Enter Your Name", isPresented: $showName) {
+            /*.alert("Enter Your Name", isPresented: $showName) {
                 TextField("Name", text: $enteredName)
 
                 Button("Save") {
@@ -123,7 +126,7 @@ struct ContentView: View {
                     enteredName = ""
                     showName = true
                 }
-            }
+            }*/
         }
     }
     func firebaseStuff() {
@@ -148,10 +151,6 @@ struct ContentView: View {
         }
       }
       return true
-    }
-    
-    func signOut(sender: Any) {
-      GIDSignIn.sharedInstance.signOut()
     }
 }
 

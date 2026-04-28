@@ -16,23 +16,13 @@ struct LogInView: View {
             
             GoogleSignInButton(action: handleSignInButton)
         }
-        .onAppear {
-            GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
-                // Check if `user` exists; otherwise, do something with `error`
-                if user != nil {
-                    //print(user!)
-                } else {
-                    //print(error!)
-                }
-            }
-        }
     }
     
     func handleSignInButton() {
         let rootVC = getRootViewController()
         GIDSignIn.sharedInstance.signIn(withPresenting: rootVC) { signInResult, error in
             guard signInResult != nil else {
-                print(error!)
+                //print(error!)
                 return
             }
             

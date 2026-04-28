@@ -7,11 +7,15 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>clc.WordGameKenefickKoscielski</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.1094285887314-2a821uti5ectbhtfc9lsoo8bh4tptks9</string>
 			</array>
 		</dict>
 	</array>
+	<key>GIDClientID</key>
+	<string>1094285887314-5r71m8f2oal1t7vrp3r09gk40qp0vtjm.apps.googleusercontent.com</string>
 </dict>
 </plist>

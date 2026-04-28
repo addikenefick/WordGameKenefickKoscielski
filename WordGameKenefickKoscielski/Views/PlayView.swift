@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct PlayView: View {
+    
+    @Binding var players: [Player]
+    
+    @Binding var personalHighscore: Int
+    
     var body: some View {
         NavigationStack{
             VStack{
@@ -20,7 +25,9 @@ struct PlayView: View {
                     .fontDesign(.serif)
                     .font(.headline)
                 Spacer()
-                Button("Easy"){}
+                NavigationLink("Easy"){
+                    GameView(thisPlayer: $players, personalHighScore: $personalHighscore, gamemode: 1)
+                }
                 
                     
                     .frame(maxWidth: 150, maxHeight: 70)
@@ -31,7 +38,9 @@ struct PlayView: View {
                     .font(.title)
                     .padding(10)
                     
-                Button("Medium"){}
+                NavigationLink("Medium"){
+                    GameView(thisPlayer: $players, personalHighScore: $personalHighscore, gamemode: 2)
+                }
                     .padding()
                     .frame(maxWidth: 150, maxHeight: 70)
                     .background(.yellow)
@@ -42,7 +51,9 @@ struct PlayView: View {
                     .padding(10)
 
 
-                Button("Hard"){}
+                NavigationLink("Hard"){
+                    GameView(thisPlayer: $players, personalHighScore: $personalHighscore, gamemode: 3)
+                }
                     .padding()
                     .frame(maxWidth: 150, maxHeight: 70)
                     .background(.red)
@@ -61,6 +72,4 @@ Spacer()
         
 }
 
-#Preview {
-    PlayView()
-}
+
