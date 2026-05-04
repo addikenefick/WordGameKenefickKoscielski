@@ -12,7 +12,6 @@ struct ContentView: View {
     @State var showName = false
     @State var enteredName = ""
     @State var selectedPage = "home"
-    @AppStorage("playerName") var playerName = ""
     var ref = Database.database().reference()
     
     @State var exists = false
@@ -40,13 +39,7 @@ struct ContentView: View {
                                     .bold()
                                     .fontDesign(.serif)
                                 
-                                if playerName != "" {
-                                    Text("Hi \(playerName)!")
-                                        .foregroundColor(.gray)
-                                }
-                                else {
-                                    Text("Playing as guest")
-                                }
+                             
                                 Spacer()
                                 NavigationLink("Easy High Scores") {
                                     LeaderboardView(scores: $leaderboard, selectedMode: 1)
@@ -129,9 +122,7 @@ struct ContentView: View {
             .onAppear(){
                 leaderboard.removeAll()
                 firebaseStuff()
-                if playerName == "" {
-                        showName = true
-                }
+              
             }
             /*.alert("Enter Your Name", isPresented: $showName) {
                 TextField("Name", text: $enteredName)

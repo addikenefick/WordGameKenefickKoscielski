@@ -10,7 +10,6 @@ import SwiftUI
 
 struct GameView: View {
     @Binding var thisPlayer: [Player]
-    @AppStorage("playerName") var playerName = ""
     @Binding var easyHigh: Int
     @Binding var mediumHigh: Int
     @Binding var hardHigh: Int
@@ -52,25 +51,8 @@ struct GameView: View {
             VStack(spacing: 20) {
 
                 Button("End Game") {
-                    thisPoints = "\(points)"
-                    if gamemode == 1 {
-                        currentHigh = easyHigh
-                    } else if gamemode == 2 {
-                        currentHigh = mediumHigh
-                    } else {
-                        currentHigh = hardHigh
-                    }
-
-                    if points > currentHigh {
+                    if topHundred() {
                         newScore = true
-                        
-                        if gamemode == 1 {
-                            easyHigh = points
-                        } else if gamemode == 2 {
-                            mediumHigh = points
-                        } else {
-                            hardHigh = points
-                        }
                     } else {
                         dismiss()
                     }
@@ -234,42 +216,27 @@ struct GameView: View {
                 }
 
             }
-            .alert("New Highscore!", isPresented: $newScore) {
-                Button("yay") {
-                    let ref = Database.database().reference()
-
-                    if let existingPlayer = thisPlayer.first(where: {
-                        $0.name == playerName && $0.mode == gamemode
-                    }) {
-
-                        ref.child("leaderboard").child(existingPlayer.key)
-                            .updateChildValues([
-                                "score": Int(thisPoints) ?? 0,
-                                "mode": gamemode
-                            ])
-                        existingPlayer.score = Int(thisPoints) ?? 0
-                    } else {
-
-                        let newRef = ref.child("leaderboard").childByAutoId()
-
-                        newRef.setValue([
-                            "name": playerName,
-                            "score": Int(thisPoints) ?? 0,
-                            "mode" : gamemode
-                        ])
-
-                        let newPlayer = Player(
-                            name: playerName,
-                            score: Int(thisPoints) ?? 0
-                        )
-                        newPlayer.key = newRef.key ?? ""
-
-                        thisPlayer.append(newPlayer)
+            .alert("Top Score!", isPresented: $newScore) {
+                TextField("Enter name", text: $addedName)
+                
+                Button("Save") {
+                    if nameDouble() {
+                        print("name taken")
+                        return
                     }
+                    
+                    let ref = Database.database().reference()
+                    let newRef = ref.child("leaderboard").childByAutoId()
+
+                    newRef.setValue([
+                        "name": addedName,
+                        "score": points,
+                        "mode": gamemode
+                    ])
+
                     dismiss()
                 }
             }
-
             .onAppear {
                 if vowelLetters.isEmpty && consonantLetters.isEmpty {
                     generateLetters()
@@ -286,7 +253,21 @@ struct GameView: View {
             }
         }
     }
-
+    func topHundred() -> Bool {
+        let filtered = thisPlayer.filter { $0.mode == gamemode }
+        let sorted = filtered.sorted { $0.score > $1.score }
+        
+        if sorted.count < 100 {
+            return true
+        }
+        
+        return points > sorted.last!.score
+    }
+    func nameDouble() -> Bool {
+        return thisPlayer.contains {
+            $0.name.lowercased() == addedName.lowercased() && $0.mode == gamemode
+        }
+    }
     func generateLetters() {
         if gamemode == 1 {
             let shuffledConsonants = consonants.shuffled()
