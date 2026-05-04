@@ -9,6 +9,7 @@ import SwiftUI
 struct LeaderboardView: View {
     
     @Binding var scores: [Player]
+    var selectedMode: Int
     
     var body: some View {
         VStack{
@@ -18,8 +19,11 @@ struct LeaderboardView: View {
                 .fontDesign(.serif)
             
             List {
-                let sortedScores = scores.sorted { Int($0.score)! > Int($1.score)! }
                 
+                let filtered = scores.filter { $0.mode == selectedMode }
+                let sortedScores = filtered.sorted {
+                    (Int($0.score)) > (Int($1.score))
+                }
                 ForEach(0..<sortedScores.count, id: \.self) { s in
                     if s < 100 {
                         HStack {
@@ -32,12 +36,4 @@ struct LeaderboardView: View {
             }
         }
     }
-    
 }
-
-
-
-
-
-
-

@@ -6,7 +6,9 @@ import FirebaseDatabase
 
 struct ContentView: View {
     @State var leaderboard: [Player] = []
-    @AppStorage("personalHighScore") var personalHighScore = 0
+    @AppStorage("easyHigh") var easyHigh = 0
+    @AppStorage("mediumHigh") var mediumHigh = 0
+    @AppStorage("hardHigh") var hardHigh = 0
     @State var showName = false
     @State var enteredName = ""
     @State var selectedPage = "home"
@@ -28,7 +30,7 @@ struct ContentView: View {
 //                                    .foregroundColor(.gray)
 //                            }
                 if selectedPage == "play" {
-                    PlayView(players: $leaderboard, personalHighscore: $personalHighScore)
+                    PlayView(players: $leaderboard, easyHigh: $easyHigh, mediumHigh: $mediumHigh, hardHigh: $hardHigh)
                         } else if selectedPage == "settings" {
                             SettingsView()
                         } else {
@@ -40,12 +42,36 @@ struct ContentView: View {
                                 
                                 if playerName != "" {
                                     Text("Hi \(playerName)!")
-                                    Text("High Score: \(personalHighScore)")
                                         .foregroundColor(.gray)
                                 }
                                 else {
                                     Text("Playing as guest")
                                 }
+                                Spacer()
+                                NavigationLink("Easy High Scores") {
+                                    LeaderboardView(scores: $leaderboard, selectedMode: 1)
+                                }
+                                .padding()
+                                .background(.green)
+                                .foregroundColor(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                                NavigationLink("Medium High Scores") {
+                                    LeaderboardView(scores: $leaderboard, selectedMode: 2)
+                                }
+                                .padding()
+                                .background(.yellow)
+                                .foregroundColor(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                                NavigationLink("Hard High Scores") {
+                                    LeaderboardView(scores: $leaderboard, selectedMode: 3)
+                                }
+                                .padding()
+                                .background(.red)
+                                .foregroundColor(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                Spacer()
                             }
                         }
                         

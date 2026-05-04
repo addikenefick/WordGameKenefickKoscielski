@@ -11,8 +11,9 @@ struct PlayView: View {
     
     @Binding var players: [Player]
     
-    @Binding var personalHighscore: Int
-    
+    @Binding var easyHigh: Int
+    @Binding var mediumHigh: Int
+    @Binding var hardHigh: Int
     var body: some View {
         NavigationStack{
             VStack{
@@ -26,7 +27,13 @@ struct PlayView: View {
                     .font(.headline)
                 Spacer()
                 NavigationLink("Easy"){
-                    GameView(thisPlayer: $players, personalHighScore: $personalHighscore, gamemode: 1)
+                    GameView(
+                        thisPlayer: $players,
+                        easyHigh: $easyHigh,
+                        mediumHigh: $mediumHigh,
+                        hardHigh: $hardHigh,
+                        gamemode: 1
+                    )
                 }
                 
                     
@@ -39,7 +46,13 @@ struct PlayView: View {
                     .padding(10)
                     
                 NavigationLink("Medium"){
-                    GameView(thisPlayer: $players, personalHighScore: $personalHighscore, gamemode: 2)
+                    GameView(
+                        thisPlayer: $players,
+                        easyHigh: $easyHigh,
+                        mediumHigh: $mediumHigh,
+                        hardHigh: $hardHigh,
+                        gamemode: 2
+                    )
                 }
                     .padding()
                     .frame(maxWidth: 150, maxHeight: 70)
@@ -52,7 +65,13 @@ struct PlayView: View {
 
 
                 NavigationLink("Hard"){
-                    GameView(thisPlayer: $players, personalHighScore: $personalHighscore, gamemode: 3)
+                    GameView(
+                        thisPlayer: $players,
+                        easyHigh: $easyHigh,
+                        mediumHigh: $mediumHigh,
+                        hardHigh: $hardHigh,
+                        gamemode: 3
+                    )
                 }
                     .padding()
                     .frame(maxWidth: 150, maxHeight: 70)

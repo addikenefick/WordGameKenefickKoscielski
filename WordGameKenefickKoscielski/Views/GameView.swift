@@ -11,11 +11,14 @@ import SwiftUI
 struct GameView: View {
     @Binding var thisPlayer: [Player]
     @AppStorage("playerName") var playerName = ""
-    @Binding var personalHighScore: Int
+    @Binding var easyHigh: Int
+    @Binding var mediumHigh: Int
+    @Binding var hardHigh: Int
     @State var thisPoints = ""
     @State var newScore = false
     @State var addedName = ""
     @State var consonantLetters: [String] = []
+    @State var consonantLetters2: [String] = []
 
     @State var vowelLetters: [String] = []
 
@@ -42,18 +45,32 @@ struct GameView: View {
     @State var alreadyPlayed = false
     
     @State var gamemode: Int
+    @State var currentHigh = 0
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
 
                 Button("End Game") {
-
                     thisPoints = "\(points)"
+                    if gamemode == 1 {
+                        currentHigh = easyHigh
+                    } else if gamemode == 2 {
+                        currentHigh = mediumHigh
+                    } else {
+                        currentHigh = hardHigh
+                    }
 
-                    if points > personalHighScore {
-                        personalHighScore = points
+                    if points > currentHigh {
                         newScore = true
+                        
+                        if gamemode == 1 {
+                            easyHigh = points
+                        } else if gamemode == 2 {
+                            mediumHigh = points
+                        } else {
+                            hardHigh = points
+                        }
                     } else {
                         dismiss()
                     }
@@ -72,37 +89,44 @@ struct GameView: View {
                 Text("Shop:")
                     .bold()
                 HStack {
-                    NavigationLink(
-                        "Consonant \n(30 Points)",
-                        destination: NewLetterView(
-                            changeLetters: $consonantLetters,
-                            points: $points,
-                            vor: 1
+                    VStack{
+                        NavigationLink(
+                            "Consonant",
+                            destination: NewLetterView(
+                                changeLetters: $consonantLetters,
+                                points: $points,
+                                vor: 1
+                            )
                         )
-                    )
-                    .padding(10)
-                    .background(.black)
-                    .foregroundStyle(.white)
-                    .cornerRadius(10)
-                    .navigationBarBackButtonHidden(true)
-                    .disabled(over30)
-
-                    NavigationLink(
-                        "Vowel \n(50 Points)",
-                        destination: NewLetterView(
-                            changeLetters: $vowelLetters,
-                            points: $points,
-                            vor: 2
+                        
+                        .padding(10)
+                        .background(.black)
+                        .foregroundStyle(.white)
+                        .cornerRadius(10)
+                        .navigationBarBackButtonHidden(true)
+                        .disabled(over30)
+                        Text("30 Points")
+                    }
+                    VStack{
+                        NavigationLink(
+                            "Vowel",
+                            destination: NewLetterView(
+                                changeLetters: $vowelLetters,
+                                points: $points,
+                                vor: 2
+                            )
                         )
-                    )
-                    .padding(10)
-                    .background(.blue)
-                    .foregroundStyle(.white)
-                    .cornerRadius(10)
-                    .navigationBarBackButtonHidden(true)
-                    .disabled(over50)
+                        
+                        .padding(10)
+                        .background(.blue)
+                        .foregroundStyle(.white)
+                        .cornerRadius(10)
+                        .navigationBarBackButtonHidden(true)
+                        .disabled(over50)
+                        Text("50 Points")
+                        
+                    }
                 }
-
                 Spacer()
                 Text(" \(word) ")
                     .font(.system(size: 40, weight: .bold))
@@ -113,16 +137,50 @@ struct GameView: View {
                     .padding()
 
                 HStack {
-                    ForEach(consonantLetters, id: \.self) { letter in
-                        Button(letter) {
-                            word += letter
+                    if gamemode == 1 {
+                        VStack{
+                            HStack{
+                                ForEach(consonantLetters, id: \.self) { letter in
+                                    Button(letter) {
+                                        word += letter
+                                    }
+                                }
+                            .padding()
+                            .frame(maxWidth: 67)
+                            .background(Color.black)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .shadow(radius: 3)
+
                         }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.black)
-                        .foregroundColor(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .shadow(radius: 3)
+                            HStack{
+                                ForEach(consonantLetters2, id: \.self) { letter in
+                                    Button(letter) {
+                                        word += letter
+                                    }
+                                    .padding()
+                                    .frame(maxWidth: 67)
+                                    .background(Color.black)
+                                    .foregroundColor(.white)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    .shadow(radius: 3)
+                                }
+                            }
+                            }
+                        }
+                        else{
+                                ForEach(consonantLetters, id: \.self) { letter in
+                                    Button(letter) {
+                                        word += letter
+                                    }
+                                    .padding()
+                                    .frame(maxWidth: 67)
+                                    .background(Color.black)
+                                    .foregroundColor(.white)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    .shadow(radius: 3)
+
+                                }
                     }
                 }
 
@@ -181,28 +239,28 @@ struct GameView: View {
                     let ref = Database.database().reference()
 
                     if let existingPlayer = thisPlayer.first(where: {
-                        $0.name == playerName
+                        $0.name == playerName && $0.mode == gamemode
                     }) {
 
                         ref.child("leaderboard").child(existingPlayer.key)
                             .updateChildValues([
-                                "score": thisPoints
+                                "score": Int(thisPoints) ?? 0,
+                                "mode": gamemode
                             ])
-
-                        existingPlayer.score = thisPoints
-
+                        existingPlayer.score = Int(thisPoints) ?? 0
                     } else {
 
                         let newRef = ref.child("leaderboard").childByAutoId()
 
                         newRef.setValue([
                             "name": playerName,
-                            "score": thisPoints,
+                            "score": Int(thisPoints) ?? 0,
+                            "mode" : gamemode
                         ])
 
                         let newPlayer = Player(
                             name: playerName,
-                            score: thisPoints
+                            score: Int(thisPoints) ?? 0
                         )
                         newPlayer.key = newRef.key ?? ""
 
@@ -232,7 +290,8 @@ struct GameView: View {
     func generateLetters() {
         if gamemode == 1 {
             let shuffledConsonants = consonants.shuffled()
-            consonantLetters = Array(shuffledConsonants.prefix(8))
+            consonantLetters = Array(shuffledConsonants.prefix(5))
+            consonantLetters2 = Array(shuffledConsonants.suffix(5))
 
             let shuffledVowels = vowels.shuffled()
             vowelLetters = Array(shuffledVowels.prefix(5))
