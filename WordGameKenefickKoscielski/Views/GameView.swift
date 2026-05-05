@@ -42,7 +42,7 @@ struct GameView: View {
     @State var wordsPlayed: [String] = []
 
     @State var alreadyPlayed = false
-    
+
     @State var gamemode: Int
     @State var currentHigh = 0
 
@@ -71,7 +71,7 @@ struct GameView: View {
                 Text("Shop:")
                     .bold()
                 HStack {
-                    VStack{
+                    VStack {
                         NavigationLink(
                             "Consonant",
                             destination: NewLetterView(
@@ -80,7 +80,7 @@ struct GameView: View {
                                 vor: 1
                             )
                         )
-                        
+
                         .padding(10)
                         .background(.black)
                         .foregroundStyle(.white)
@@ -89,7 +89,7 @@ struct GameView: View {
                         .disabled(over30)
                         Text("30 Points")
                     }
-                    VStack{
+                    VStack {
                         NavigationLink(
                             "Vowel",
                             destination: NewLetterView(
@@ -98,7 +98,7 @@ struct GameView: View {
                                 vor: 2
                             )
                         )
-                        
+
                         .padding(10)
                         .background(.blue)
                         .foregroundStyle(.white)
@@ -106,7 +106,7 @@ struct GameView: View {
                         .navigationBarBackButtonHidden(true)
                         .disabled(over50)
                         Text("50 Points")
-                        
+
                     }
                 }
                 Spacer()
@@ -120,13 +120,28 @@ struct GameView: View {
 
                 HStack {
                     if gamemode == 1 {
-                        VStack{
-                            HStack{
-                                ForEach(consonantLetters, id: \.self) { letter in
-                                    Button(letter) {
-                                        word += letter
+                        FlowLayout {
+                                ForEach(0..<consonantLetters.count, id: \.self) {
+                                    i in
+                                    Button(consonantLetters[i]) {
+                                        word += consonantLetters[i]
                                     }
                                 }
+                                .padding()
+                                .frame(maxWidth: 67)
+                                .background(Color.black)
+                                .foregroundColor(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .shadow(radius: 3)
+
+                            
+
+                        }
+                    } else {
+                        ForEach(consonantLetters, id: \.self) { letter in
+                            Button(letter) {
+                                word += letter
+                            }
                             .padding()
                             .frame(maxWidth: 67)
                             .background(Color.black)
@@ -135,34 +150,6 @@ struct GameView: View {
                             .shadow(radius: 3)
 
                         }
-                            HStack{
-                                ForEach(consonantLetters2, id: \.self) { letter in
-                                    Button(letter) {
-                                        word += letter
-                                    }
-                                    .padding()
-                                    .frame(maxWidth: 67)
-                                    .background(Color.black)
-                                    .foregroundColor(.white)
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                                    .shadow(radius: 3)
-                                }
-                            }
-                            }
-                        }
-                        else{
-                                ForEach(consonantLetters, id: \.self) { letter in
-                                    Button(letter) {
-                                        word += letter
-                                    }
-                                    .padding()
-                                    .frame(maxWidth: 67)
-                                    .background(Color.black)
-                                    .foregroundColor(.white)
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                                    .shadow(radius: 3)
-
-                                }
                     }
                 }
 
@@ -218,20 +205,20 @@ struct GameView: View {
             }
             .alert("Top Score!", isPresented: $newScore) {
                 TextField("Enter name", text: $addedName)
-                
+
                 Button("Save") {
                     if nameDouble() {
                         print("name taken")
                         return
                     }
-                    
+
                     let ref = Database.database().reference()
                     let newRef = ref.child("leaderboard").childByAutoId()
 
                     newRef.setValue([
                         "name": addedName,
                         "score": points,
-                        "mode": gamemode
+                        "mode": gamemode,
                     ])
 
                     dismiss()
@@ -256,23 +243,23 @@ struct GameView: View {
     func topHundred() -> Bool {
         let filtered = thisPlayer.filter { $0.mode == gamemode }
         let sorted = filtered.sorted { $0.score > $1.score }
-        
+
         if sorted.count < 100 {
             return true
         }
-        
+
         return points > sorted.last!.score
     }
     func nameDouble() -> Bool {
         return thisPlayer.contains {
-            $0.name.lowercased() == addedName.lowercased() && $0.mode == gamemode
+            $0.name.lowercased() == addedName.lowercased()
+                && $0.mode == gamemode
         }
     }
     func generateLetters() {
         if gamemode == 1 {
             let shuffledConsonants = consonants.shuffled()
-            consonantLetters = Array(shuffledConsonants.prefix(5))
-            consonantLetters2 = Array(shuffledConsonants.suffix(5))
+            consonantLetters = Array(shuffledConsonants.prefix(8))
 
             let shuffledVowels = vowels.shuffled()
             vowelLetters = Array(shuffledVowels.prefix(5))
@@ -367,5 +354,63 @@ struct GameView: View {
             }
         }
         dataTask.resume()
+    }
+}
+
+struct FlowLayout: Layout {
+    
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let sizes = subviews.map { $0.sizeThatFits(.unspecified) }
+
+        var totalHeight: CGFloat = 0
+        var totalWidth: CGFloat = 0
+
+        var lineWidth: CGFloat = 0
+        var lineHeight: CGFloat = 0
+
+        for size in sizes {
+            if lineWidth + size.width > proposal.width ?? 0 {
+                totalHeight += lineHeight
+                lineWidth = size.width
+                lineHeight = size.height
+            } else {
+                lineWidth += size.width
+                lineHeight = max(lineHeight, size.height)
+            }
+
+            totalWidth = max(totalWidth, lineWidth)
+        }
+
+        totalHeight += lineHeight
+
+        return .init(width: totalWidth, height: totalHeight)
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        let sizes = subviews.map { $0.sizeThatFits(.unspecified) }
+
+        var lineX = bounds.minX
+        var lineY = bounds.minY
+        var lineHeight: CGFloat = 0
+
+        for index in subviews.indices {
+            if lineX + sizes[index].width > (proposal.width ?? 0) {
+                lineY += lineHeight
+                lineHeight = 0
+                lineX = bounds.minX
+            }
+
+            subviews[index].place(
+                at: .init(
+                    x: lineX + sizes[index].width / 2,
+                    y: lineY + sizes[index].height / 2
+                ),
+                anchor: .center,
+                proposal: ProposedViewSize(sizes[index])
+            )
+
+            lineHeight = max(lineHeight, sizes[index].height)
+            lineX += sizes[index].width
+        }
     }
 }
