@@ -6,8 +6,8 @@
 //
 
 import FirebaseDatabaseInternal
-import SwiftUI
 import FlowLayout
+import SwiftUI
 
 struct GameView: View {
     @Binding var thisPlayer: [Player]
@@ -50,7 +50,7 @@ struct GameView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
-
+                
                 Button("End Game") {
                     if topHundred() {
                         newScore = true
@@ -63,7 +63,7 @@ struct GameView: View {
                 .background(.red)
                 .foregroundStyle(.white)
                 .cornerRadius(10)
-
+                
                 Spacer()
                 Text("Points: \(points)")
                     .bold()
@@ -81,7 +81,7 @@ struct GameView: View {
                                 vor: 1
                             )
                         )
-
+                        
                         .padding(10)
                         .background(.black)
                         .foregroundStyle(.white)
@@ -99,7 +99,7 @@ struct GameView: View {
                                 vor: 2
                             )
                         )
-
+                        
                         .padding(10)
                         .background(.blue)
                         .foregroundStyle(.white)
@@ -107,7 +107,7 @@ struct GameView: View {
                         .navigationBarBackButtonHidden(true)
                         .disabled(over50)
                         Text("50 Points")
-
+                        
                     }
                 }
                 Spacer()
@@ -120,11 +120,13 @@ struct GameView: View {
                     .padding()
                 
                 
-                    //LazyVGrid(columns: GridItem(.adaptive(minimum: .infinity, maximum: .infinity))) {
-                        if gamemode == 1 {
-                            
-                            ForEach(0..<consonantLetters.count, id: \.self) {
-                                i in
+                
+
+                    if gamemode == 1 {
+                        
+                        ForEach(0..<consonantLetters.count, id: \.self) {
+                            i in
+                            if i > 4 {
                                 Button(consonantLetters[i]) {
                                     word += consonantLetters[i]
                                 }
@@ -134,23 +136,41 @@ struct GameView: View {
                                 .foregroundColor(.white)
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                                 .shadow(radius: 3)
+                                
+                            } else {
+                                GridRow {
+                                    Button(consonantLetters[i]) {
+                                        word += consonantLetters[i]
+                                    }
+                                    .padding()
+                                    .frame(width: 67)
+                                    .background(Color.black)
+                                    .foregroundColor(.white)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    .shadow(radius: 3)
+                                    
+                                }
                             }
                             
-                        } else {
-                            ForEach(consonantLetters, id: \.self) { letter in
-                                Button(letter) {
-                                    word += letter
-                                }
-                                .padding()
-                                .frame(maxWidth: 67)
-                                .background(Color.black)
-                                .foregroundColor(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                                .shadow(radius: 3)
-                                
-                            }
                         }
-                    //}
+                        
+                    } else {
+                        ForEach(consonantLetters, id: \.self) { letter in
+                            Button(letter) {
+                                word += letter
+                            }
+                            .padding()
+                            .frame(maxWidth: 67)
+                            .background(Color.black)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .shadow(radius: 3)
+                            
+                        }
+                    }
+                    
+                
+            
                 
 
                 HStack {
@@ -239,7 +259,7 @@ struct GameView: View {
 
             }
         }
-        
+
     }
     func topHundred() -> Bool {
         let filtered = thisPlayer.filter { $0.mode == gamemode }
@@ -357,3 +377,5 @@ struct GameView: View {
         dataTask.resume()
     }
 }
+
+
