@@ -11,7 +11,7 @@ struct ContentView: View {
     @AppStorage("hardHigh") var hardHigh = 0
     @State var showName = false
     @State var enteredName = ""
-    @State var selectedPage = "home"
+    @State var selectedPage = "play"
     var ref = Database.database().reference()
     
     @State var exists = false
@@ -30,9 +30,8 @@ struct ContentView: View {
 //                            }
                 if selectedPage == "play" {
                     PlayView(players: $leaderboard, easyHigh: $easyHigh, mediumHigh: $mediumHigh, hardHigh: $hardHigh)
-                        } else if selectedPage == "settings" {
-                            SettingsView()
-                        } else {
+                        }
+                else {
                             VStack {
                                 Text("Word Game")
                                     .font(.largeTitle)
@@ -45,6 +44,8 @@ struct ContentView: View {
                                     LeaderboardView(scores: $leaderboard, selectedMode: 1)
                                 }
                                 .padding()
+                                .frame(maxWidth: 195)
+
                                 .background(.green)
                                 .foregroundColor(.white)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -52,7 +53,10 @@ struct ContentView: View {
                                 NavigationLink("Medium High Scores") {
                                     LeaderboardView(scores: $leaderboard, selectedMode: 2)
                                 }
+                                
                                 .padding()
+                                .frame(maxWidth: 195)
+
                                 .background(.yellow)
                                 .foregroundColor(.white)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -60,7 +64,10 @@ struct ContentView: View {
                                 NavigationLink("Hard High Scores") {
                                     LeaderboardView(scores: $leaderboard, selectedMode: 3)
                                 }
+
                                 .padding()
+                                .frame(maxWidth: 195)
+
                                 .background(.red)
                                 .foregroundColor(.white)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -71,6 +78,7 @@ struct ContentView: View {
                         Spacer()
                         
                         HStack {
+                            Spacer()
                             Button {
                                 selectedPage = "home"
                             } label: {
@@ -90,17 +98,7 @@ struct ContentView: View {
                                     Text("Play")
                                 }
                             }
-                            
                             Spacer()
-                            
-                            Button {
-                                selectedPage = "settings"
-                            } label: {
-                                VStack {
-                                    Image(systemName: "gear")
-                                    Text("Settings")
-                                }
-                            }
                         }
                         .padding()
                         .foregroundColor(.black)
@@ -147,14 +145,21 @@ struct ContentView: View {
         }
     }
     func firebaseStuff() {
-        ref.child("leaderboard").observe(.childAdded) { (snapshot) in
-            if let value = snapshot.value as? [String: Any] {
-                let player = Player(snapshot: value)
-                player.key = snapshot.key
-                leaderboard.append(player)
+        ref.child("leaderboard").getData { error, snapshot in
+            leaderboard.removeAll()
+            
+            if let value = snapshot?.value as? [String: Any] {
+                for (key, val) in value {
+                    if let dict = val as? [String: Any] {
+                        let player = Player(snapshot: dict)
+                        player.key = key
+                        leaderboard.append(player)
+                    }
+                }
             }
         }
     }
+
     
     func application(
       _ application: UIApplication,
