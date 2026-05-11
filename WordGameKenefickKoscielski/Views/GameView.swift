@@ -47,10 +47,15 @@ struct GameView: View {
     @State var gamemode: Int
     @State var currentHigh = 0
 
+    @State var columns = Array(
+        repeating: GridItem(.fixed(67), spacing: 10),
+        count: 4
+    )
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
-                
+
                 Button("End Game") {
                     if topHundred() {
                         newScore = true
@@ -63,7 +68,7 @@ struct GameView: View {
                 .background(.red)
                 .foregroundStyle(.white)
                 .cornerRadius(10)
-                
+
                 Spacer()
                 Text("Points: \(points)")
                     .bold()
@@ -75,13 +80,13 @@ struct GameView: View {
                     VStack {
                         NavigationLink(
                             "Consonant",
-                            destination: NewLetterView(
+                            destination: NewLetterView(difficulty: $gamemode,
                                 changeLetters: $consonantLetters,
                                 points: $points,
                                 vor: 1
                             )
                         )
-                        
+
                         .padding(10)
                         .background(.black)
                         .foregroundStyle(.white)
@@ -93,13 +98,13 @@ struct GameView: View {
                     VStack {
                         NavigationLink(
                             "Vowel",
-                            destination: NewLetterView(
+                            destination: NewLetterView(difficulty: $gamemode,
                                 changeLetters: $vowelLetters,
                                 points: $points,
                                 vor: 2
                             )
                         )
-                        
+
                         .padding(10)
                         .background(.blue)
                         .foregroundStyle(.white)
@@ -107,7 +112,7 @@ struct GameView: View {
                         .navigationBarBackButtonHidden(true)
                         .disabled(over50)
                         Text("50 Points")
-                        
+
                     }
                 }
                 Spacer()
@@ -118,60 +123,37 @@ struct GameView: View {
                     .background(Color.gray.opacity(0.2))
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                     .padding()
-                
-                
-                
 
-                    if gamemode == 1 {
-                        
-                        ForEach(0..<consonantLetters.count, id: \.self) {
-                            i in
-                            if i > 4 {
-                                Button(consonantLetters[i]) {
-                                    word += consonantLetters[i]
-                                }
-                                .padding()
-                                .frame(width: 67)
-                                .background(Color.black)
-                                .foregroundColor(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                                .shadow(radius: 3)
-                                
-                            } else {
-                                GridRow {
-                                    Button(consonantLetters[i]) {
-                                        word += consonantLetters[i]
-                                    }
-                                    .padding()
-                                    .frame(width: 67)
-                                    .background(Color.black)
-                                    .foregroundColor(.white)
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                                    .shadow(radius: 3)
-                                    
-                                }
-                            }
-                            
-                        }
-                        
-                    } else {
+                if gamemode == 1 {
+
+                    LazyVGrid(columns: columns, spacing: 10) {
                         ForEach(consonantLetters, id: \.self) { letter in
                             Button(letter) {
                                 word += letter
                             }
                             .padding()
-                            .frame(maxWidth: 67)
+                            .frame(width: 67, height: 50)
                             .background(Color.black)
                             .foregroundColor(.white)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                             .shadow(radius: 3)
-                            
                         }
                     }
-                    
-                
-            
-                
+
+                } else {
+                    ForEach(consonantLetters, id: \.self) { letter in
+                        Button(letter) {
+                            word += letter
+                        }
+                        .padding()
+                        .frame(maxWidth: 67)
+                        .background(Color.black)
+                        .foregroundColor(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .shadow(radius: 3)
+
+                    }
+                }
 
                 HStack {
                     ForEach(vowelLetters, id: \.self) { letter in
@@ -377,5 +359,3 @@ struct GameView: View {
         dataTask.resume()
     }
 }
-
-

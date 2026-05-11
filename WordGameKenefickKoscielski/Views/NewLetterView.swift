@@ -9,6 +9,8 @@ import SwiftUI
 
 struct NewLetterView: View {
     
+    @Binding var difficulty: Int
+    
     @Binding var changeLetters: [String]
     
     @Binding var points: Int
@@ -23,6 +25,11 @@ struct NewLetterView: View {
     
     @Environment(\.dismiss) private var dismiss
     
+    @State var columns = Array(
+        repeating: GridItem(.fixed(67), spacing: 10),
+        count: 4
+    )
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -31,15 +38,31 @@ struct NewLetterView: View {
                 
                 Spacer()
                 
-                HStack {
-                    ForEach(0..<changeLetters.count, id: \.self) { i in
-                        Button(changeLetters[i]) {
-                            randomizeLetter(num: i)
+                if difficulty == 1 && vor == 1 {
+                    LazyVGrid(columns: columns, spacing: 10) {
+                        ForEach(0..<changeLetters.count, id: \.self) { i in
+                            Button(changeLetters[i]) {
+                                randomizeLetter(num: i)
+                            }
+                            .padding()
+                            .frame(width: 67, height: 50)
+                            .background(Color.black)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .shadow(radius: 3)
                         }
-                        .frame(width: 50, height: 50)
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                    }
+                } else {
+                    HStack {
+                        ForEach(0..<changeLetters.count, id: \.self) { i in
+                            Button(changeLetters[i]) {
+                                randomizeLetter(num: i)
+                            }
+                            .frame(width: 50, height: 50)
+                            .background(Color.red)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                        }
                     }
                 }
                 
@@ -88,6 +111,3 @@ struct NewLetterView: View {
     }
 }
 
-#Preview {
-    
-}
