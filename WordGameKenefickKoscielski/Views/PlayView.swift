@@ -34,6 +34,7 @@ struct PlayView: View {
                         hardHigh: $hardHigh,
                         gamemode: 1
                     )
+                    .navigationBarBackButtonHidden(true)
                 }
                 
                     
@@ -53,6 +54,7 @@ struct PlayView: View {
                         hardHigh: $hardHigh,
                         gamemode: 2
                     )
+                    .navigationBarBackButtonHidden(true)
                 }
                     .padding()
                     .frame(maxWidth: 150, maxHeight: 70)
@@ -72,6 +74,7 @@ struct PlayView: View {
                         hardHigh: $hardHigh,
                         gamemode: 3
                     )
+                    .navigationBarBackButtonHidden(true)
                 }
                     .padding()
                     .frame(maxWidth: 150, maxHeight: 70)

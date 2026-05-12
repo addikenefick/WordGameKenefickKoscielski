@@ -43,34 +43,37 @@ struct ContentView: View {
                                 NavigationLink("Easy High Scores") {
                                     LeaderboardView(scores: $leaderboard, selectedMode: 1)
                                 }
-                                .padding()
-                                .frame(maxWidth: 195)
-
+                                .padding(10)
+                                .frame(maxWidth: 150, maxHeight: 70)
                                 .background(.green)
                                 .foregroundColor(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .shadow(radius: 3)
 
                                 NavigationLink("Medium High Scores") {
                                     LeaderboardView(scores: $leaderboard, selectedMode: 2)
                                 }
                                 
-                                .padding()
-                                .frame(maxWidth: 195)
+                                .padding(10)
+                                .frame(maxWidth: 150, maxHeight: 70)
 
                                 .background(.yellow)
                                 .foregroundColor(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .shadow(radius: 3)
 
                                 NavigationLink("Hard High Scores") {
                                     LeaderboardView(scores: $leaderboard, selectedMode: 3)
                                 }
 
-                                .padding()
-                                .frame(maxWidth: 195)
+                                .padding(10)
+                                .frame(maxWidth: 150, maxHeight: 70)
 
                                 .background(.red)
                                 .foregroundColor(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .shadow(radius: 3)
+                                
                                 Spacer()
                             }
                         }
@@ -80,11 +83,11 @@ struct ContentView: View {
                         HStack {
                             Spacer()
                             Button {
-                                selectedPage = "home"
+                                selectedPage = "leaderboards"
                             } label: {
                                 VStack {
-                                    Image(systemName: "house")
-                                    Text("Home")
+                                    Image(systemName: "chart.bar.xaxis")
+                                    Text("Leaders")
                                 }
                             }
                             

@@ -18,7 +18,6 @@ struct GameView: View {
     @State var newScore = false
     @State var addedName = ""
     @State var consonantLetters: [String] = []
-    @State var consonantLetters2: [String] = []
 
     @State var vowelLetters: [String] = []
 
@@ -31,7 +30,7 @@ struct GameView: View {
         "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z",
     ]
 
-    @State var points = 0
+    @State var points = 100
     @State var notReal = false
 
     @Environment(\.dismiss) private var dismiss
@@ -39,6 +38,8 @@ struct GameView: View {
     @State var over30 = true
 
     @State var over50 = true
+
+    @State var amtOfLetters = false
 
     @State var wordsPlayed: [String] = []
 
@@ -51,8 +52,11 @@ struct GameView: View {
         repeating: GridItem(.fixed(67), spacing: 10),
         count: 4
     )
-    
-    @State var columns2 = Array(repeating: GridItem(.fixed(67), spacing: 10), count: 3)
+
+    @State var columns2 = Array(
+        repeating: GridItem(.fixed(67), spacing: 10),
+        count: 3
+    )
 
     var body: some View {
         NavigationStack {
@@ -80,38 +84,36 @@ struct GameView: View {
                     .bold()
                 HStack {
                     VStack {
-                        NavigationLink(
-                            "Consonant",
-                            destination: NewLetterView(difficulty: $gamemode,
+                        NavigationLink("Consonant") {
+                            NewLetterView(
+                                difficulty: $gamemode,
                                 changeLetters: $consonantLetters,
                                 points: $points,
                                 vor: 1
                             )
-                        )
-
+                            .navigationBarBackButtonHidden(true)
+                        }
                         .padding(10)
                         .background(.black)
                         .foregroundStyle(.white)
                         .cornerRadius(10)
-                        .navigationBarBackButtonHidden(true)
                         .disabled(over30)
                         Text("30 Points")
                     }
                     VStack {
-                        NavigationLink(
-                            "Vowel",
-                            destination: NewLetterView(difficulty: $gamemode,
+                        NavigationLink("Vowel") {
+                            NewLetterView(
+                                difficulty: $gamemode,
                                 changeLetters: $vowelLetters,
                                 points: $points,
                                 vor: 2
                             )
-                        )
-
+                            .navigationBarBackButtonHidden(true)
+                        }
                         .padding(10)
                         .background(.blue)
                         .foregroundStyle(.white)
                         .cornerRadius(10)
-                        .navigationBarBackButtonHidden(true)
                         .disabled(over50)
                         Text("50 Points")
 
@@ -191,6 +193,9 @@ struct GameView: View {
 
                 Button("Submit") {
                     print(word)
+                    if word.count < 2 {
+
+                    }
                     getDictionary(theWord: word)
                     word = ""
                 }
