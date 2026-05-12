@@ -47,10 +47,12 @@ struct GameView: View {
     @State var gamemode: Int
     @State var currentHigh = 0
 
-    @State var columns = Array(
+    @State var columns1 = Array(
         repeating: GridItem(.fixed(67), spacing: 10),
         count: 4
     )
+    
+    @State var columns2 = Array(repeating: GridItem(.fixed(67), spacing: 10), count: 3)
 
     var body: some View {
         NavigationStack {
@@ -126,7 +128,7 @@ struct GameView: View {
 
                 if gamemode == 1 {
 
-                    LazyVGrid(columns: columns, spacing: 10) {
+                    LazyVGrid(columns: columns1, spacing: 10) {
                         ForEach(consonantLetters, id: \.self) { letter in
                             Button(letter) {
                                 word += letter
@@ -141,17 +143,34 @@ struct GameView: View {
                     }
 
                 } else {
-                    ForEach(consonantLetters, id: \.self) { letter in
-                        Button(letter) {
-                            word += letter
+                    if gamemode == 2 {
+                        LazyVGrid(columns: columns2, spacing: 10) {
+                            ForEach(consonantLetters, id: \.self) { letter in
+                                Button(letter) {
+                                    word += letter
+                                }
+                                .padding()
+                                .frame(width: 67, height: 50)
+                                .background(Color.black)
+                                .foregroundColor(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .shadow(radius: 3)
+                            }
                         }
-                        .padding()
-                        .frame(maxWidth: 67)
-                        .background(Color.black)
-                        .foregroundColor(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .shadow(radius: 3)
-
+                    } else {
+                        HStack {
+                            ForEach(consonantLetters, id: \.self) { letter in
+                                Button(letter) {
+                                    word += letter
+                                }
+                                .padding()
+                                .frame(maxWidth: 67)
+                                .background(Color.black)
+                                .foregroundColor(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .shadow(radius: 3)
+                            }
+                        }
                     }
                 }
 
