@@ -30,7 +30,7 @@ struct GameView: View {
         "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z",
     ]
 
-    @State var points = 100
+    @State var points = 0
     @State var notReal = false
 
     @Environment(\.dismiss) private var dismiss

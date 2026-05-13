@@ -36,8 +36,6 @@ struct PlayView: View {
                     )
                     .navigationBarBackButtonHidden(true)
                 }
-                
-                    
                     .frame(maxWidth: 150, maxHeight: 70)
                     .background(.green)
                     .foregroundColor(.white)
