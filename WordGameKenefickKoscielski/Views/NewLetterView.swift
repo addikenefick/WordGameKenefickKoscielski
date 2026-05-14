@@ -93,7 +93,15 @@ struct NewLetterView: View {
             }
             
             changeLetters[num] = consonants[ran]
-            points -= 30
+            if difficulty == 1 {
+                points -= 10
+            } else {
+                if difficulty == 2 {
+                    points -= 20
+                } else {
+                    points -= 30
+                }
+            }
             
         } else {
             
@@ -104,7 +112,15 @@ struct NewLetterView: View {
             }
             
             changeLetters[num] = vowels[ran]
-            points -= 50
+            if difficulty == 1 {
+                points -= 30
+            } else {
+                if difficulty == 2 {
+                    points -= 40
+                } else {
+                    points -= 50
+                }
+            }
         }
         
         dismiss()

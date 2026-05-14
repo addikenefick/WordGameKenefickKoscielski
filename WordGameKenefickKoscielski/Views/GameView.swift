@@ -35,9 +35,9 @@ struct GameView: View {
 
     @Environment(\.dismiss) private var dismiss
 
-    @State var over30 = true
+    @State var overConsonant = true
 
-    @State var over50 = true
+    @State var overVowel = true
 
     @State var amtOfLetters = false
 
@@ -97,8 +97,16 @@ struct GameView: View {
                         .background(.black)
                         .foregroundStyle(.white)
                         .cornerRadius(10)
-                        .disabled(over30)
-                        Text("30 Points")
+                        .disabled(overConsonant)
+                        if gamemode == 1 {
+                            Text("10 Points")
+                        } else {
+                            if gamemode == 2 {
+                                Text("20 Points")
+                            } else {
+                                Text("30 Points")
+                            }
+                        }
                     }
                     VStack {
                         NavigationLink("Vowel") {
@@ -114,8 +122,16 @@ struct GameView: View {
                         .background(.blue)
                         .foregroundStyle(.white)
                         .cornerRadius(10)
-                        .disabled(over50)
-                        Text("50 Points")
+                        .disabled(overVowel)
+                        if gamemode == 1 {
+                            Text("30 Points")
+                        } else {
+                            if gamemode == 2 {
+                                Text("40 Points")
+                            } else {
+                                Text("50 Points")
+                            }
+                        }
 
                     }
                 }
@@ -310,16 +326,44 @@ struct GameView: View {
     }
 
     func over() {
-        if points >= 30 {
-            over30 = false
-            if points >= 50 {
-                over50 = false
+        if gamemode == 1 {
+            if points >= 10 {
+                overConsonant = false
+                if points >= 30 {
+                    overVowel = false
+                } else {
+                    overVowel = true
+                }
             } else {
-                over50 = true
+                overConsonant = true
+                overVowel = true
             }
         } else {
-            over30 = true
-            over50 = true
+            if gamemode == 2 {
+                if points >= 20 {
+                    overConsonant = false
+                    if points >= 40 {
+                        overVowel = false
+                    } else {
+                        overVowel = true
+                    }
+                } else {
+                    overConsonant = true
+                    overVowel = true
+                }
+            } else {
+                if points >= 30 {
+                    overConsonant = false
+                    if points >= 50 {
+                        overVowel = false
+                    } else {
+                        overVowel = true
+                    }
+                } else {
+                    overConsonant = true
+                    overVowel = true
+                }
+            }
         }
     }
 
